@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/guideline"
-        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintGuide_percent="0.75"
         android:orientation="horizontal"/>
 
     <FrameLayout
@@ -20,7 +20,16 @@
         android:transitionGroup="false"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/guideline"
-        tools:ignore="MergeRootFrame,Overdraw,UnusedAttribute" />
+        tools:ignore="MergeRootFrame,Overdraw,UnusedAttribute">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/my_nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:defaultNavHost="true"
+            app:navGraph="@navigation/nav_graph"/>
+    </FrameLayout>
 
     <FrameLayout
         android:id="@+id/frag_container2"

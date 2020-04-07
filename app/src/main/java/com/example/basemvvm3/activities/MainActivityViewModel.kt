@@ -15,15 +15,4 @@ class MainActivityViewModel @Inject constructor(
 
     val listPhoto: LiveData<List<Photo>>
         get() = _listPhoto
-
-    private val _numberOfClick = MutableLiveData<Int>()
-
-    val numberOfClick: LiveData<Int>
-            get() = _numberOfClick
-
-    private var num = 0
-
-    fun incrementBy1(){
-        _numberOfClick.postValue(num++)
-    }
 }
