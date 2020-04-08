@@ -6,15 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.Observer
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.basemvvm3.R
+import com.example.basemvvm3.activities.MainActivity
+import com.example.basemvvm3.fragment.dialog.GeneralCenterDialogWith2Buttons
 import com.example.basemvvm3.helper.viewModelProvider
 import dagger.android.support.DaggerFragment
+import kotlinx.android.synthetic.main.fragment_main_2.*
 import javax.inject.Inject
 
-class MainFragment2 : DaggerFragment() {
+class MainFragment2 : DaggerFragment(), MainActivity.OnDisplayName {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -36,21 +40,6 @@ class MainFragment2 : DaggerFragment() {
         }
     }
 
-    //1. Call back patter
-    interface OnSelectedSthListener {
-        fun onSelected()
-    }
-
-    private lateinit var callback: OnSelectedSthListener
-
-    fun setOnSelectedListener(callback: OnSelectedSthListener) {
-        this.callback = callback
-    }
-
-    //somewhere in here will do callback.onSelected()
-
-    //one provide object: OnSelectedSthListener and then MainFragment().setOnSelectedListener(object)
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vm1 = requireActivity().run {
@@ -66,6 +55,14 @@ class MainFragment2 : DaggerFragment() {
         return inflater.inflate(R.layout.fragment_main_2, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        vm1.currentFragmentTag.observe(viewLifecycleOwner, Observer {
+            text.text = it
+        })
+    }
+
     companion object {
         private const val DATA = "DATA"
 
@@ -76,5 +73,9 @@ class MainFragment2 : DaggerFragment() {
                 }
             }
         }
+    }
+
+    override fun onSelected(str: String) {
+        text.text = str
     }
 }

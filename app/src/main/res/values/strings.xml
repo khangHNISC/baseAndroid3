@@ -1,4 +1,10 @@
 <resources>
     <string name="app_name">BaseMVVM3</string>
-    <string name="press">Press!</string>
+    <string name="show_center_dialog">Show Center Dialog</string>
+    <string name="show_bottom_dialog">Show Bottom Dialog</string>
+    <string name="dialog_image">Dialog Image</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="dialog_header">Dialog Header</string>
+    <string name="lorem_ipsum">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</string>
 </resources>

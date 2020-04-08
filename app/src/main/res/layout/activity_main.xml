@@ -22,7 +22,7 @@
         app:layout_constraintBottom_toTopOf="@id/guideline"
         tools:ignore="MergeRootFrame,Overdraw,UnusedAttribute">
 
-        <androidx.fragment.app.FragmentContainerView
+        <fragment
             android:id="@+id/my_nav_host_fragment"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
