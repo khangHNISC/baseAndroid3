@@ -3,13 +3,15 @@ package com.example.basemvvm3.activities
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import com.example.basemvvm3.R
 import com.example.basemvvm3.fragment.MainFragment2
 import com.example.basemvvm3.helper.replaceFragment
 import com.example.basemvvm3.helper.viewModelProvider
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import dagger.android.support.DaggerAppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
 class MainActivity : DaggerAppCompatActivity() {
@@ -51,6 +53,8 @@ class MainActivity : DaggerAppCompatActivity() {
                 callback.onSelected(currentFragLabel)
             }
         }
+
+        (bottom_nav as BottomNavigationView).setupWithNavController(navController)
     }
 
     override fun onAttachFragment(fragment: Fragment) {
