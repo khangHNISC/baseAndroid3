@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.basemvvm3.R
 import com.example.basemvvm3.fragment.MainFragment2
 import com.example.basemvvm3.helper.replaceFragment
@@ -40,16 +41,16 @@ class MainActivity : DaggerAppCompatActivity() {
                 MainFragment2.newInstance()
             )
         }
+        vm = viewModelProvider(viewModelFactory)
 
-        val controller = findNavController(R.id.my_nav_host_fragment)
-        controller.addOnDestinationChangedListener { _, destination, _ ->
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+        navController.addOnDestinationChangedListener { _, destination, _ ->
             currentFragLabel = destination.label.toString()
             if (::callback.isInitialized) {
                 callback.onSelected(currentFragLabel)
             }
         }
-
-        vm = viewModelProvider(viewModelFactory)
     }
 
     override fun onAttachFragment(fragment: Fragment) {

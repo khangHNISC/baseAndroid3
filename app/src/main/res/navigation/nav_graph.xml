@@ -9,7 +9,12 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.example.basemvvm3.fragment.MainFragment"
-        android:label="MainFragment" />
+        android:label="MainFragment" >
+        <action
+            android:id="@+id/action_mainFragment_to_mainFragment2"
+            app:destination="@id/mainFragment2"
+            app:popUpTo="@id/mainFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainFragment2"
         android:name="com.example.basemvvm3.fragment.MainFragment2"
