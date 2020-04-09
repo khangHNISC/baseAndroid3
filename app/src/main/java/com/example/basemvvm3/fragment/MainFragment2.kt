@@ -9,9 +9,9 @@ import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.basemvvm3.R
-import dagger.android.support.DaggerFragment
+import com.example.basemvvm3.helper.MainNavigationFragment
 
-class MainFragment2 : DaggerFragment() {
+class MainFragment2 : MainNavigationFragment() {
 
     private val vm2: MainFragment2ViewModel by viewModels {
         object : AbstractSavedStateViewModelFactory(this, null) {

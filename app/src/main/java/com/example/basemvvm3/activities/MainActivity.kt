@@ -2,16 +2,17 @@ package com.example.basemvvm3.activities
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.basemvvm3.R
 import com.example.basemvvm3.fragment.FragmentInfo
+import com.example.basemvvm3.helper.NavigationHost
 import com.example.basemvvm3.helper.replaceFragment
 import com.example.basemvvm3.helper.viewModelProvider
 import com.google.android.material.navigation.NavigationView
@@ -19,14 +20,14 @@ import dagger.android.support.DaggerAppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-class MainActivity : DaggerAppCompatActivity() {
+class MainActivity : DaggerAppCompatActivity(), NavigationHost {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
     private lateinit var vm: MainActivityViewModel
 
-    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
 
     //1. Call back patter
     interface OnDisplayName {
@@ -52,14 +53,12 @@ class MainActivity : DaggerAppCompatActivity() {
 
         vm = viewModelProvider(viewModelFactory)
 
+        setUpTranslucentStatusBar()
+
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
 
-        val navController = host.navController
-
-        appBarConfiguration = AppBarConfiguration(navController.graph, drawer_layout)
-
-        setupActionBarWithNavController(navController, appBarConfiguration)
+        navController = host.navController
 
         (nav_view as NavigationView).setupWithNavController(navController)
 
@@ -82,8 +81,24 @@ class MainActivity : DaggerAppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {
-        return findNavController(R.id.my_nav_host_fragment).navigateUp(appBarConfiguration)
+    override fun registerToolbarWithNavigation(toolbar: Toolbar) {
+        val appBarConfiguration = AppBarConfiguration(TOP_LEVEL_DESTINATIONS, drawer_layout)
+        toolbar.setupWithNavController(navController, appBarConfiguration)
+    }
+
+    private fun setUpTranslucentStatusBar(){
+        //drawer_layout.setOnApplyWindowInsetsListener ()
+        container.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+                View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+
+    }
+
+    companion object {
+        private val TOP_LEVEL_DESTINATIONS = setOf(
+            R.id.navigation_main_fragment,
+            R.id.navigation_main_fragment_2
+        )
     }
 }
 

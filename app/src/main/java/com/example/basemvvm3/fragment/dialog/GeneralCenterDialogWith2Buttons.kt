@@ -47,7 +47,7 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
 
         btnPositive.setOnClickListener {
             parentFragment?.view?.let {
-                Navigation.findNavController(it).navigate(R.id.subFragment)
+                Navigation.findNavController(it).navigate(R.id.navigation_sub_fragment)
             }
             dismiss()
         }

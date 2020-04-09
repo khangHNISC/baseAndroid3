@@ -10,13 +10,13 @@ import com.example.basemvvm3.R
 import com.example.basemvvm3.activities.MainActivityViewModel
 import com.example.basemvvm3.fragment.dialog.GeneralBottomDialog
 import com.example.basemvvm3.fragment.dialog.GeneralCenterDialogWith2Buttons
+import com.example.basemvvm3.helper.MainNavigationFragment
 import com.example.basemvvm3.helper.viewModelProvider
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import javax.inject.Inject
 
 //share MainFragmentVM with Fragment2 scope activity
-class MainFragment : DaggerFragment() {
+class MainFragment : MainNavigationFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -49,6 +49,8 @@ class MainFragment : DaggerFragment() {
         btn_dialog_bottom.setOnClickListener {
             GeneralBottomDialog.newInstance().show(this.childFragmentManager, BOTTOM_DIALOG)
         }
+
+        toolbar.setNavigationIcon(R.drawable.ic_home)
     }
 
     override fun onAttachFragment(childFragment: Fragment) {

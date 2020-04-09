@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.basemvvm3.R
-import dagger.android.support.DaggerFragment
+import com.example.basemvvm3.helper.MainNavigationFragment
 
-class SubFragment : DaggerFragment() {
+class SubFragment : MainNavigationFragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
