@@ -11,9 +11,9 @@ import dagger.multibindings.IntoMap
 @Module
 internal abstract class MainFragmentModule  {
 
-    @ContributesAndroidInjector(
-        modules = [DialogModule::class]
-    )
+    @ContributesAndroidInjector(modules = [
+        DialogModule::class
+    ])
     internal abstract fun contributeFragment(): MainFragment
 
     @Binds

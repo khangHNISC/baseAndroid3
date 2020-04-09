@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navigationContentDescription=""
         app:navigationIcon="@drawable/ic_list"
-        app:title="MainFragment2" />-->
+        app:title="SubFragment" />-->
 
     <TextView
         android:id="@+id/text"

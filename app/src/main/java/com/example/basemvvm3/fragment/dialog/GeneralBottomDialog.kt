@@ -21,12 +21,6 @@ class GeneralBottomDialog : BottomSheetDialogFragment(), HasAndroidInjector {
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
 
-    private lateinit var callBack: OnDialogDestroy
-
-    fun setOnDialogDestroyCallBack(callBack: OnDialogDestroy){
-        this.callBack = callBack
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NO_FRAME, R.style.AppBottomSheetDialogTheme)
@@ -49,13 +43,8 @@ class GeneralBottomDialog : BottomSheetDialogFragment(), HasAndroidInjector {
     }
 
     override fun onAttach(context: Context) {
-        AndroidSupportInjection.inject(this);
+        AndroidSupportInjection.inject(this)
         super.onAttach(context)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        callBack.notifyFragmentWhenDialogDestroy()
     }
 
     override fun androidInjector(): AndroidInjector<Any> {

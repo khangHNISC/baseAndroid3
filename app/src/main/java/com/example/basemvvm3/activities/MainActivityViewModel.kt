@@ -15,4 +15,13 @@ class MainActivityViewModel @Inject constructor(
 
     val listPhoto: LiveData<List<Photo>>
         get() = _listPhoto
+
+    private val _currentFragmentTag = MutableLiveData<String>()
+
+    val currentFragmentTag: LiveData<String>
+        get() = _currentFragmentTag
+
+    fun notifyMainFragment2(nameFragment: String){
+        _currentFragmentTag.postValue(nameFragment)
+    }
 }

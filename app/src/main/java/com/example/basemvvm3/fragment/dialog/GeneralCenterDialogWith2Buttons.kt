@@ -17,13 +17,6 @@ import kotlinx.android.synthetic.main.general_dialog_with_2_buttons.*
 class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
 
     //totally fine to inject vm here
-
-    private lateinit var callBack: OnDialogDestroy
-
-    fun setOnDialogDestroyCallBack(callBack: OnDialogDestroy){
-        this.callBack = callBack
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,7 +30,7 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
         dialog?.window?.setLayout(
             WindowManager.LayoutParams.MATCH_PARENT,
             WindowManager.LayoutParams.WRAP_CONTENT
-        );
+        )
         dialog?.window?.setBackgroundDrawable(
             InsetDrawable(
                 ColorDrawable(Color.TRANSPARENT),
@@ -54,7 +47,7 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
 
         btnPositive.setOnClickListener {
             parentFragment?.view?.let {
-                Navigation.findNavController(it).navigate(R.id.mainFragment2)
+                Navigation.findNavController(it).navigate(R.id.subFragment)
             }
             dismiss()
         }
@@ -62,11 +55,6 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
         btnNegative.setOnClickListener {
             dismiss()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        callBack.notifyFragmentWhenDialogDestroy()
     }
 
     companion object {
