@@ -50,7 +50,7 @@ class MainFragment : MainNavigationFragment() {
             GeneralBottomDialog.newInstance().show(this.childFragmentManager, BOTTOM_DIALOG)
         }
 
-        toolbar.setNavigationIcon(R.drawable.ic_home)
+        //toolbar.setNavigationIcon(R.drawable.ic_home)
     }
 
     override fun onAttachFragment(childFragment: Fragment) {
