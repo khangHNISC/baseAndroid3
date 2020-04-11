@@ -82,3 +82,11 @@ class MainFragment2 : MainNavigationFragment() {
         }
     }
 }
+
+//childFragmentManager:
+//  Return a private FragmentManager for placing and managing Fragments
+//     inside of this Fragment.
+
+//parentFragmentManager:
+//  Return the FragmentManager for interacting with fragments associated
+//     with this fragment's activity
