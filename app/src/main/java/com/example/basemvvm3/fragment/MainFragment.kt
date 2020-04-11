@@ -44,18 +44,24 @@ class MainFragment : MainNavigationFragment() {
         btn_dialog_center.setOnClickListener {
             GeneralCenterDialogWith2Buttons.newInstance()
                 .show(this.childFragmentManager, CENTER_DIALOG)
-        }
-
-        btn_dialog_bottom.setOnClickListener {
             GeneralBottomDialog.newInstance().show(this.childFragmentManager, BOTTOM_DIALOG)
         }
 
         //toolbar.setNavigationIcon(R.drawable.ic_home)
     }
 
+    //first time add: OnAttach -> OnCreate -> OnCreateView -> OnViewCreated -> OnActivityCreated
+    //                                                  -> onViewStateRestored -> OnStart -> OnResume
+
+    //   OnActivityCreated: After onActivityCreated and OnFragmentViewCreated
+
+    //detach: onPause, onStop, onDestroyView
+    //reattach: onCreateView -> OnViewCreated -> OnActivityCreated -> OnStart -> OnResume
+    //destroy: onPause onStop onDestroyView onDestroy onDetach
+
     override fun onAttachFragment(childFragment: Fragment) {
         super.onAttachFragment(childFragment)
-        mainVm.notifyMainFragment2(childFragment.tag ?: "UNKNOWN")
+        //set listener here
     }
 
     companion object {

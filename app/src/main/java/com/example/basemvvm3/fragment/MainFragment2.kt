@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.basemvvm3.R
+import com.example.basemvvm3.fragment.sub.SubFragment2
 import com.example.basemvvm3.helper.MainNavigationFragment
+import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_main_2.*
 
 class MainFragment2 : MainNavigationFragment() {
 
@@ -32,6 +37,42 @@ class MainFragment2 : MainNavigationFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_main_2, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setupViewPager()
+
+        fab.setOnClickListener(View.OnClickListener { view ->
+            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+                .setAction("Action", null).show()
+        })
+    }
+
+    private fun setupViewPager() {
+        viewpager.adapter = object :
+            FragmentStatePagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+            private val mFragments = arrayListOf<Fragment>()
+            private val mFragmentTitles = arrayListOf<String>()
+
+            fun addFragment(fragment: Fragment, title: String) {
+                mFragments.add(fragment)
+                mFragmentTitles.add(title)
+            }
+
+            override fun getItem(position: Int) = mFragments[position]
+
+            override fun getCount() = mFragments.size
+
+            override fun getPageTitle(pos: Int): String = mFragmentTitles[pos]
+        }.also {
+            it.addFragment(SubFragment2(), "SUB 1")
+            it.addFragment(SubFragment2(), "SUB 2")
+            it.addFragment(SubFragment2(), "SUB 3")
+        }
+
+        tabs.setupWithViewPager(viewpager)
     }
 
     companion object {

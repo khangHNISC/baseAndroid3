@@ -8,4 +8,7 @@ internal abstract class SubFragmentModule  {
 
     @ContributesAndroidInjector
     internal abstract fun contributeSubFragment(): SubFragment
+
+    @ContributesAndroidInjector
+    internal abstract fun contributeSubFragment2(): SubFragment2
 }

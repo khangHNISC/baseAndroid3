@@ -44,16 +44,14 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        if (savedInstanceState == null) {
+        /*if (savedInstanceState == null) {
             replaceFragment(
                 R.id.frag_container2,
                 FragmentInfo.newInstance()
             )
-        }
+        }*/
 
         vm = viewModelProvider(viewModelFactory)
-
-        setUpTranslucentStatusBar()
 
         val host: NavHostFragment = supportFragmentManager
             .findFragmentById(R.id.my_nav_host_fragment) as NavHostFragment? ?: return
@@ -76,9 +74,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
     }
 
     override fun onAttachFragment(fragment: Fragment) {
-        if (fragment is FragmentInfo) {
-            this.setOnSelectedListener(fragment)
-        }
+        //attach listener here
     }
 
     override fun registerToolbarWithNavigation(toolbar: Toolbar) {
@@ -87,6 +83,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
     }
 
     private fun setUpTranslucentStatusBar(){
+        //+ enable container fitsSystemWindow = true
         //drawer_layout.setOnApplyWindowInsetsListener ()
         container.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
                 View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
