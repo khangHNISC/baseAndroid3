@@ -67,9 +67,7 @@ class MainFragment2 : MainNavigationFragment() {
 
             override fun getPageTitle(pos: Int): String = mFragmentTitles[pos]
         }.also {
-            it.addFragment(SubFragment2(), "SUB 1")
-            it.addFragment(SubFragment2(), "SUB 2")
-            it.addFragment(SubFragment2(), "SUB 3")
+            it.addFragment(SubFragment2(), "SIMPLE RV")
         }
 
         tabs.setupWithViewPager(viewpager)

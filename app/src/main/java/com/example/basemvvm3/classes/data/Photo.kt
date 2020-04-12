@@ -8,5 +8,9 @@ data class Photo(
     @SerializedName("id")
     val id: String?,
     @SerializedName("title")
-    val title: String?
+    val title: String?,
+    @SerializedName("url")
+    val url: String?,
+    @SerializedName("thumbnailUrl")
+    val thumbnailUrl: String?
 )

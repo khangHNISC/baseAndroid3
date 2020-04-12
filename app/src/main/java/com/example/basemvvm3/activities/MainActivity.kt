@@ -11,9 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.basemvvm3.R
-import com.example.basemvvm3.fragment.FragmentInfo
 import com.example.basemvvm3.helper.NavigationHost
-import com.example.basemvvm3.helper.replaceFragment
 import com.example.basemvvm3.helper.viewModelProvider
 import com.google.android.material.navigation.NavigationView
 import dagger.android.support.DaggerAppCompatActivity
@@ -82,7 +80,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationHost {
         toolbar.setupWithNavController(navController, appBarConfiguration)
     }
 
-    private fun setUpTranslucentStatusBar(){
+    private fun setUpTranslucentStatusBar() {
         //+ enable container fitsSystemWindow = true
         //drawer_layout.setOnApplyWindowInsetsListener ()
         container.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or

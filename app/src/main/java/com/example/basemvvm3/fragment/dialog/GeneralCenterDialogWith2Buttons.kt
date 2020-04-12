@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.navigation.Navigation
 import com.example.basemvvm3.R
-import com.example.basemvvm3.helper.OnDialogDestroy
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.general_dialog_with_2_buttons.*
 
