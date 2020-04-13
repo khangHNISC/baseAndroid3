@@ -55,7 +55,7 @@ class SubFragment2 : DaggerFragment() {
 
         vm.listPhoto.observe(viewLifecycleOwner, Observer { list ->
             listPhoto = list //add all to listPhoto and then pass listPhoto to showPhotoItem
-            showPhotoItem(recyclerview, getSubList(listPhoto))
+            showPhotoItem(recyclerview, getSubList(listPhoto, true))
         })
 
         vm.getPhoto()
@@ -85,7 +85,8 @@ class SubFragment2 : DaggerFragment() {
         recyclerview.visibility = View.VISIBLE
     }
 
-    private fun getSubList(list: List<PhotoItem>): List<PhotoItem>{
+    private fun getSubList(list: List<PhotoItem>, resetIndex: Boolean = false): List<PhotoItem>{
+        if(resetIndex) indexList = 0
         indexList+=20
         val listAdapter = list.subList(0, indexList).toMutableList()
         if(indexList < list.size) {

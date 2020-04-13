@@ -12,6 +12,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.basemvvm3.R
 import com.example.basemvvm3.fragment.sub.SubFragment2
+import com.example.basemvvm3.fragment.sub.SubFragment21
 import com.example.basemvvm3.helper.MainNavigationFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main_2.*
@@ -67,7 +68,8 @@ class MainFragment2 : MainNavigationFragment() {
 
             override fun getPageTitle(pos: Int): String = mFragmentTitles[pos]
         }.also {
-            it.addFragment(SubFragment2(), "SIMPLE RV")
+            it.addFragment(SubFragment2(), "Simple RV")
+            it.addFragment(SubFragment21(), "Multi RV")
         }
 
         tabs.setupWithViewPager(viewpager)
