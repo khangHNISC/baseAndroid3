@@ -1,6 +1,7 @@
 package com.example.basemvvm3.fragment.sub
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +60,7 @@ class SubFragment2 : DaggerFragment() {
 
         vm.getPhoto()
     }
-    
+
     private fun showPhotoItem(rv: RecyclerView, list: List<PhotoItem>){
         if(adapter == null) {
             adapter = PhotoAdapter()
@@ -76,7 +77,6 @@ class SubFragment2 : DaggerFragment() {
         if (rv.adapter == null) {
             rv.adapter = adapter
         }
-
         (rv.adapter as PhotoAdapter).submitList(list)
 
         if(!isNotLoading) isNotLoading = true
@@ -100,7 +100,9 @@ class SubFragment2 : DaggerFragment() {
         val total = rv.adapter?.itemCount ?: 0
         if(last >= total - 1 && isNotLoading){
             isNotLoading = false
-            showPhotoItem(recyclerview, getSubList(listPhoto)) //vm.getPhoto()
+            Handler().postDelayed({
+                showPhotoItem(recyclerview, getSubList(listPhoto)) //vm.getPhoto()
+            }, 2000)//purpose of demo
         }
     }
 }
