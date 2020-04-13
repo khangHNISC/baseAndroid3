@@ -85,6 +85,9 @@ class SubFragment2 : DaggerFragment() {
         recyclerview.visibility = View.VISIBLE
     }
 
+    /**
+     * this is fake data
+     */
     private fun getSubList(list: List<PhotoItem>, resetIndex: Boolean = false): List<PhotoItem>{
         if(resetIndex) indexList = 0
         indexList+=20

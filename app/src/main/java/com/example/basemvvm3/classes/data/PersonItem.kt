@@ -5,3 +5,8 @@ data class PersonItem(
     val name: String,
     val age: Int
 )
+
+data class PersonList(
+    val name: String,
+    val list: ArrayList<PersonItem>
+)

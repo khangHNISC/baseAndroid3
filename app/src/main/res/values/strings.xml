@@ -18,4 +18,5 @@
     <string name="menu_night_mode_day">menu_night_mode_day</string>
     <string name="menu_night_mode_night">menu_night_mode_night</string>
     <string name="menu_night_mode_auto">menu_night_mode_auto</string>
+    <string name="avatar">avatar</string>
 </resources>

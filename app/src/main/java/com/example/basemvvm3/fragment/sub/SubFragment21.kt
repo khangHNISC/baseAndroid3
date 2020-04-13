@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PersonItem
+import com.example.basemvvm3.classes.data.PersonList
 import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.fragment.adapter.*
 import kotlinx.android.synthetic.main.sub_fragment_2.*
@@ -31,15 +32,26 @@ class SubFragment21: Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout.isEnabled = false
+
         showItems(recyclerview, initList())
     }
 
+    /**
+     * this is fake data
+     */
     private fun initList(): List<Any>?{
         val l = mutableListOf<Any>()
         for((i, _) in (0..30).withIndex()){
             val chance = Random.nextInt(0,2)
             if(chance == 0){
-                l.add(PersonItem(i,"MR$i", 20))
+                val list = PersonList("$i", arrayListOf())
+                for(m in 0..5){
+                    list.list.add(PersonItem(1,"MR${i+m}",30))
+                }
+                l.add(list)
             }else{
                 l.add(PhotoItem("","$i","MR$i", "",""))
             }
@@ -50,8 +62,9 @@ class SubFragment21: Fragment(){
     //pass vm to adapter
     private fun showItems(recyclerView: RecyclerView, list: List<Any>?){
         if(adapter == null){
+            val viewPool = recyclerView.recycledViewPool
             val photoViewBinder = PhotoViewBinder()
-            val personViewBinder = PersonViewBinder()
+            val personViewBinder = PersonListViewBinder(viewPool)
             @Suppress("UNCHECKED_CAST")
             val viewBinder = mapOf<ItemClass, MapTypeToVH>(
                 photoViewBinder.modelClass to photoViewBinder as MapTypeToVH,
@@ -61,6 +74,7 @@ class SubFragment21: Fragment(){
         }
         if(recyclerView.adapter == null){
             recyclerView.adapter = adapter
+            recyclerView.setHasFixedSize(true)
         }
         (recyclerView.adapter as MultiViewItemAdapter).submitList(list ?: emptyList())
 
