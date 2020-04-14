@@ -34,7 +34,6 @@ class PersonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             if(recyclerview.adapter == null) {
                 recyclerview.adapter = PersonAdapter()
                 recyclerview.setRecycledViewPool(viewPool)
-                recyclerview.setHasFixedSize(true)
             }
             (recyclerview.adapter as PersonAdapter).submitList(model.list)
         }

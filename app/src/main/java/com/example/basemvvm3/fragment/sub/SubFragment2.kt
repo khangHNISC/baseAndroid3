@@ -63,7 +63,7 @@ class SubFragment2 : DaggerFragment() {
 
     private fun showPhotoItem(rv: RecyclerView, list: List<PhotoItem>){
         if(adapter == null) {
-            adapter = PhotoAdapter()
+            adapter = PhotoAdapter(vm)
 
             recyclerview.apply {
                 adapter = this@SubFragment2.adapter

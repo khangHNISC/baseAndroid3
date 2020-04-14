@@ -8,11 +8,12 @@ import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.classes.mapper.toPhotoItem
 import com.example.basemvvm3.classes.repository.PhotoRepository
 import kotlinx.coroutines.async
+import timber.log.Timber
 import javax.inject.Inject
 
 class SubFragment2ViewModel @Inject constructor(
     private val repo: PhotoRepository
-) : ViewModel() {
+) : ViewModel(), SubFragment2EventListener {
 
     private val _listPhoto = MutableLiveData<List<PhotoItem>>()
 
@@ -30,4 +31,12 @@ class SubFragment2ViewModel @Inject constructor(
             }
         }
     }
+
+    override fun onItemClick(photo: PhotoItem) {
+        Timber.e("photo: ${photo.title} clicked")
+    }
+}
+
+interface SubFragment2EventListener{
+    fun onItemClick(photo: PhotoItem)
 }

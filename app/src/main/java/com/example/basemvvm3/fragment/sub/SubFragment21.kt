@@ -74,7 +74,6 @@ class SubFragment21: Fragment(){
         }
         if(recyclerView.adapter == null){
             recyclerView.adapter = adapter
-            recyclerView.setHasFixedSize(true)
         }
         (recyclerView.adapter as MultiViewItemAdapter).submitList(list ?: emptyList())
 
@@ -82,3 +81,6 @@ class SubFragment21: Fragment(){
         recyclerview.visibility = View.VISIBLE
     }
 }
+
+//optimization
+//rv.setHasFixedSize if size are fixed ->> like a filterList that can be hard code and not taken from server

@@ -3,6 +3,9 @@ package com.example.basemvvm3.fragment.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,9 +13,14 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PhotoItem
+import com.example.basemvvm3.fragment.sub.SubFragment2EventListener
 import kotlinx.android.synthetic.main.item_photo.view.*
 
-class PhotoAdapter : ListAdapter<PhotoItem, VH>(PhotoItemDiff) {
+class PhotoAdapter(
+    private val eventListener: SubFragment2EventListener,
+    private val aLiveData: LiveData<Boolean>? = null
+) :
+    ListAdapter<PhotoItem, VH>(PhotoItemDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
         val viewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
@@ -23,7 +31,7 @@ class PhotoAdapter : ListAdapter<PhotoItem, VH>(PhotoItemDiff) {
 
     override fun onBindViewHolder(holder: VH, position: Int) {
         if (holder is PhotoViewHolder) {
-            holder.bind(getItem(position))
+            holder.bind(getItem(position), eventListener, aLiveData)
         }
     }
 
@@ -33,7 +41,11 @@ class PhotoAdapter : ListAdapter<PhotoItem, VH>(PhotoItemDiff) {
 }
 
 class PhotoViewHolder(itemView: View) : VH(itemView) {
-    fun bind(item: PhotoItem) {
+    fun bind(
+        item: PhotoItem,
+        eventListener: SubFragment2EventListener?,
+        aLiveData: LiveData<Boolean>?
+    ) {
         itemView.apply {
             text1.text = item.title
 
@@ -44,6 +56,15 @@ class PhotoViewHolder(itemView: View) : VH(itemView) {
                 .load(imgUrl)
                 .apply(options.fitCenter())
                 .into(avatar)
+
+            setOnClickListener {
+                eventListener?.onItemClick(item)
+            }
+
+            //can also observe LiveData
+            aLiveData?.observe(itemView.context as LifecycleOwner, Observer {
+                //update item view base on this dude
+            })
         }
     }
 }

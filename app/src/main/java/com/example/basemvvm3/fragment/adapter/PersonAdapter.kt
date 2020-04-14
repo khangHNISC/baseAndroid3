@@ -12,7 +12,6 @@ import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PersonItem
 import kotlinx.android.synthetic.main.item_person.view.*
 import kotlinx.android.synthetic.main.item_person.view.avatar
-import kotlinx.android.synthetic.main.item_photo.view.*
 
 class PersonAdapter() : ListAdapter<PersonItem, PersonItemViewHolder>(PersonDiffUtil) {
 

@@ -13,7 +13,7 @@ class PhotoViewBinder : BaseViewBinder<PhotoItem, PhotoViewHolder>(PhotoItem::cl
     }
 
     override fun bindViewHolder(model: PhotoItem, viewHolder: PhotoViewHolder) {
-        viewHolder.bind(model)
+        viewHolder.bind(model, null, null)
     }
 
     override fun getItemViewType(): Int = R.layout.item_photo

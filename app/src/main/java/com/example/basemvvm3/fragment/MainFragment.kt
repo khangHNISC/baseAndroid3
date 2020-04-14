@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.ViewModelProvider
 import com.example.basemvvm3.R
 import com.example.basemvvm3.activities.MainActivityViewModel
@@ -51,10 +52,10 @@ class MainFragment : MainNavigationFragment() {
             GeneralBottomDialog.newInstance().show(this.childFragmentManager, BOTTOM_DIALOG)
         }
 
-        prepareToolBar()
+        prepareToolBar(toolbar)
     }
 
-    private fun prepareToolBar() {
+    private fun prepareToolBar(toolbar: Toolbar) {
         //toolbar.setNavigationIcon(R.drawable.ic_home)
         toolbar.inflateMenu(R.menu.sample_action_menu)
 
