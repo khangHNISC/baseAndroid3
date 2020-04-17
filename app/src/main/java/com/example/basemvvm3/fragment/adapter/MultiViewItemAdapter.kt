@@ -34,6 +34,17 @@ class MultiViewItemAdapter(
     override fun onBindViewHolder(holder: ViewHolder1, position: Int) {
         getViewBinder(getItemViewType(position)).bindViewHolder(getItem(position), holder)
     }
+
+    override fun onViewRecycled(holder: ViewHolder1) {
+        getViewBinder(holder.itemViewType).onViewRecycled(holder)
+        super.onViewRecycled(holder)
+
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder1) {
+        getViewBinder(holder.itemViewType).onViewDetachedFromWindow(holder)
+        super.onViewDetachedFromWindow(holder)
+    }
 }
 
 //map 1-1 type and VH, modelClass extends from M
@@ -43,6 +54,9 @@ abstract class BaseViewBinder<M, in VH : ViewHolder1>(
     abstract fun createViewHolder(parent: ViewGroup, viewType: Int): ViewHolder1
     abstract fun bindViewHolder(model: M, viewHolder: VH)
     abstract fun getItemViewType(): Int
+
+    open fun onViewRecycled(viewHolder: VH) = Unit
+    open fun onViewDetachedFromWindow(viewHolder: VH) = Unit
 }
 
 internal class ItemDiffCallback(

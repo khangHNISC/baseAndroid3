@@ -1,0 +1,79 @@
+index: index Child view inside the view group
+position: index data in the adapter
+
+1. From List View
+VH static: unit of recycling and reuse
+onCreateVH and onBindVH originally from ListView (getView)
+and G decided to separate
+(if view requires a VH -> VH null -> create one else get existed VH)
+(the process of find view by ID in VH will be saved)
+
+2. RV
+
+Layout Manager
+    cant be anything and RV doesnt care about how item are laid out
+
+Adapter
+    create View and VH
+    bind item to VH
+    notify data
+    handling item click
+
+VH:
+    life cycle:
+        1. Birth
+
+    1. LM -> getViewForPosition -> RV
+    2. RV -> check cache -> getViewForPosition -> Cache
+    3. if yes Cache pass to RV -> pass to LM
+    4. if not RV -> getViewType -> Adapter
+    5. Adapter return -> RV -> getVHByType -> RVPool
+    6. if no -> RV -> createVH -> Adapter -> pass to LM
+    7. if yes -> RV -> bindVH (VH to position) -> pass to LM
+    8. Eventually, LM -> addView -> RV
+    9. RV -> onViewAttachedToWindow -> Adapter
+
+        2. Reverse
+    1. LM -> removeAndRecycleView (a View) -> RV
+    2. RV -> onViewDetachedFromWindow -> Adapter
+    3. RV -> isValid  (a View) -> yes -> put to cache
+                               -> no -> go to RVPool
+    4. cache -> recycle (oldest cache) -> RVPool
+    5. RVPool -> onViewRecycled (oldest cache) -> Adapter
+
+        3. When data change in Adapter
+    1. RV -> onLayoutChildren -> LM
+    2. RV -> re add to ViewGroup for ItemAnimator purpose but hide from LM
+                (ChildHelper provides virtual List for LM even
+                        though Children are still existed in ViewGroup
+                AdapterHelper tracks VH positions Virtual Adapter for LM
+                )
+    3. ItemAnimator -> onAnimationFinished -> RV
+    4. RV -> onViewDetachedFromWindow -> Adapter and so on as above
+
+        4. Death
+    1. LM -> removeAndRecycleView -> RV
+    2. RV check is valid -> RVPool
+    3. if No -> RVPool check view has TransientState (animate purpose)
+    4. if yes -> onFailedToRecycle -> Adapter
+    5. if onFailedToRecycle not Implemented (default return false) adapter kills VH
+
+Use ItemAnimator Interface for best Optimize
+
+        5. Death2
+    1. RV -> addViewToPool but RVPool has limited Size per type VH
+    (pool.setMaxRecycledViews (type, count))
+
+ItemTouchHelper for drop and drag
+NOte:
+1. position in onBindVH for setOnClick might not be final
+use holder.getAdapterPosition() instead
+2. onBind with Payload
+3. for every emptyView at position in RV -> create VH
+4. [if window size = 0->10]
+    1. first 0->11 item: get, createVH, bind, attach
+    Scroll Down
+    2. 12 13 14 and so on appears: get, createVH, bind, detach previous, attach
+    Scroll Up
+    1. if in Cache: detach then attach
+    2. if in Pool: detach bind attach

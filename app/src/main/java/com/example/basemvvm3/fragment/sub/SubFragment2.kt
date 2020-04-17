@@ -61,8 +61,8 @@ class SubFragment2 : DaggerFragment() {
         vm.getPhoto()
     }
 
-    private fun showPhotoItem(rv: RecyclerView, list: List<PhotoItem>){
-        if(adapter == null) {
+    private fun showPhotoItem(rv: RecyclerView, list: List<PhotoItem>) {
+        if (adapter == null) {
             adapter = PhotoAdapter(vm)
 
             recyclerview.apply {
@@ -75,11 +75,12 @@ class SubFragment2 : DaggerFragment() {
             }
         }
         if (rv.adapter == null) {
+
             rv.adapter = adapter
         }
         (rv.adapter as PhotoAdapter).submitList(list)
 
-        if(!isNotLoading) isNotLoading = true
+        if (!isNotLoading) isNotLoading = true
         swipeRefreshLayout.isRefreshing = false
         loading.visibility = View.INVISIBLE
         recyclerview.visibility = View.VISIBLE
@@ -88,11 +89,11 @@ class SubFragment2 : DaggerFragment() {
     /**
      * this is fake data
      */
-    private fun getSubList(list: List<PhotoItem>, resetIndex: Boolean = false): List<PhotoItem>{
-        if(resetIndex) indexList = 0
-        indexList+=20
+    private fun getSubList(list: List<PhotoItem>, resetIndex: Boolean = false): List<PhotoItem> {
+        if (resetIndex) indexList = 0
+        indexList += 40
         val listAdapter = list.subList(0, indexList).toMutableList()
-        if(indexList < list.size) {
+        if (indexList < list.size) {
             listAdapter.add(PhotoItem("", "", "", "", ""))
         }
         return listAdapter
@@ -102,7 +103,7 @@ class SubFragment2 : DaggerFragment() {
         val layoutManager = (rv.layoutManager) as LinearLayoutManager
         val last = layoutManager.findLastVisibleItemPosition()
         val total = rv.adapter?.itemCount ?: 0
-        if(last >= total - 1 && isNotLoading){
+        if (last >= total - 1 && isNotLoading) {
             isNotLoading = false
             Handler().postDelayed({
                 showPhotoItem(recyclerview, getSubList(listPhoto)) //vm.getPhoto()

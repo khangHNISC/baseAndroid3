@@ -23,6 +23,7 @@ class PhotoAdapter(
     ListAdapter<PhotoItem, VH>(PhotoItemDiff) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
+        //Timber.e("2. createVH $viewType")
         val viewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         return if (viewType == R.layout.item_photo)
             PhotoViewHolder(viewHolder)
@@ -30,6 +31,7 @@ class PhotoAdapter(
     }
 
     override fun onBindViewHolder(holder: VH, position: Int) {
+        //Timber.e("3. bind data from Adapter to VH at $position to ${VH::class.java}")
         if (holder is PhotoViewHolder) {
             holder.bind(getItem(position), eventListener, aLiveData)
         }
@@ -37,6 +39,20 @@ class PhotoAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return if ((getItem(position) as PhotoItem).id.isNotBlank()) R.layout.item_photo else R.layout.item_loading
+    }
+
+    override fun onViewAttachedToWindow(holder: VH) {
+        super.onViewAttachedToWindow(holder)
+        //Timber.e("4. Attach")
+    }
+
+    override fun onViewRecycled(holder: VH) {
+        super.onViewRecycled(holder)
+    }
+
+    override fun onViewDetachedFromWindow(holder: VH) {
+        super.onViewDetachedFromWindow(holder)
+        //Timber.e("5. Detach")
     }
 }
 
