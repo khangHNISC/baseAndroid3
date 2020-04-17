@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.fragment.adapter.PhotoAdapter
+import com.example.basemvvm3.helper.Result
+import com.example.basemvvm3.helper.checkAllMatched
 import com.example.basemvvm3.helper.viewModelProvider
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.sub_fragment_2.*
@@ -53,9 +55,19 @@ class SubFragment2 : DaggerFragment() {
             vm.getPhoto()
         }
 
-        vm.listPhoto.observe(viewLifecycleOwner, Observer { list ->
-            listPhoto = list //add all to listPhoto and then pass listPhoto to showPhotoItem
-            showPhotoItem(recyclerview, getSubList(listPhoto, true))
+        vm.resultListPhoto.observe(viewLifecycleOwner, Observer { result ->
+            when(result){
+                is Result.Success -> {
+                    listPhoto = result.data
+                    showPhotoItem(recyclerview, getSubList(listPhoto, true))
+                }
+                is Result.Error -> {
+
+                }
+                is Result.Loading -> {
+                    loading.visibility = View.VISIBLE
+                }
+            }.checkAllMatched
         })
 
         vm.getPhoto()

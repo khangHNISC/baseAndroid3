@@ -5,29 +5,41 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.basemvvm3.classes.data.PhotoItem
-import com.example.basemvvm3.classes.mapper.toPhotoItem
 import com.example.basemvvm3.classes.repository.PhotoRepository
+import com.example.basemvvm3.helper.Result
 import kotlinx.coroutines.async
 import timber.log.Timber
+import java.lang.Exception
 import javax.inject.Inject
 
 class SubFragment2ViewModel @Inject constructor(
     private val repo: PhotoRepository
 ) : ViewModel(), SubFragment2EventListener {
 
-    private val _listPhoto = MutableLiveData<List<PhotoItem>>()
+    private val _resultListPhoto = MutableLiveData<Result<List<PhotoItem>>>()
 
-    val listPhoto: LiveData<List<PhotoItem>>
-        get() = _listPhoto
+    val resultListPhoto: LiveData<Result<List<PhotoItem>>>
+        get() = _resultListPhoto
 
     fun getPhoto() {
+        _resultListPhoto.postValue(Result.Loading)
         viewModelScope.async {
             val response = repo.getPhoto()
             if (response.isSuccessful) {
-                _listPhoto.postValue(response.body()?.map { it.toPhotoItem() })
-            }else{
+                _resultListPhoto.postValue(
+                    Result.Success(response.body()?.map {
+                        PhotoItem(
+                            it.albumID ?: "",
+                            it.id ?: "",
+                            it.title ?: "",
+                            it.url ?: "",
+                            it.thumbnailUrl ?: ""
+                        )
+                    } ?: emptyList())
+                )
+            } else {
                 //post error
-                _listPhoto.postValue(arrayListOf())
+                _resultListPhoto.postValue(Result.Error(Exception("Server Error")))
             }
         }
     }
@@ -37,6 +49,6 @@ class SubFragment2ViewModel @Inject constructor(
     }
 }
 
-interface SubFragment2EventListener{
+interface SubFragment2EventListener {
     fun onItemClick(photo: PhotoItem)
 }
