@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PhotoItem
 
-class PhotoViewBinder : BaseViewBinder<PhotoItem, PhotoViewHolder>(PhotoItem::class.java) {
+internal class PhotoViewBinder : BaseViewBinder<PhotoItem, PhotoGeneralViewHolder.PhotoViewHolder>(PhotoItem::class.java) {
     override fun createViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        return PhotoViewHolder(viewHolder)
+        val inflater = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        return PhotoGeneralViewHolder.PhotoViewHolder(inflater)
     }
 
-    override fun bindViewHolder(model: PhotoItem, viewHolder: PhotoViewHolder) {
+    override fun bindViewHolder(model: PhotoItem, viewHolder: PhotoGeneralViewHolder.PhotoViewHolder) {
         viewHolder.bind(model, null, null)
     }
 

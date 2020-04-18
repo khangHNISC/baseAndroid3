@@ -2,22 +2,42 @@ package com.example.basemvvm3.fragment.sub
 
 import androidx.lifecycle.ViewModel
 import com.example.basemvvm3.di.ViewModelKey
+import com.example.basemvvm3.di.scope.FragmentScoped
+import com.example.basemvvm3.fragment.Fragment2ViewPool
+import com.example.basemvvm3.fragment.SubFragment22ViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module
-internal abstract class SubFragmentModule  {
+internal abstract class SubFragmentModule {
 
+    @FragmentScoped
     @ContributesAndroidInjector
     internal abstract fun contributeSubFragment(): SubFragment
 
+    @FragmentScoped
     @ContributesAndroidInjector
     internal abstract fun contributeSubFragment2(): SubFragment2
+
+    @FragmentScoped
+    @ContributesAndroidInjector(
+        modules = [Fragment2ViewPool::class]
+    )
+    internal abstract fun contributeSubFragment21(): SubFragment21
+
+    @FragmentScoped
+    @ContributesAndroidInjector
+    internal abstract fun contributeSubFragment22(): SubFragment22
 
     @Binds
     @IntoMap
     @ViewModelKey(SubFragment2ViewModel::class)
     internal abstract fun bindMainViewModel(viewModel: SubFragment2ViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SubFragment22ViewModel::class)
+    internal abstract fun bindMainViewModel22(viewModel: SubFragment22ViewModel): ViewModel
 }

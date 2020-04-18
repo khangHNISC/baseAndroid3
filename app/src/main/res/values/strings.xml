@@ -19,4 +19,5 @@
     <string name="menu_night_mode_night">menu_night_mode_night</string>
     <string name="menu_night_mode_auto">menu_night_mode_auto</string>
     <string name="avatar">avatar</string>
+    <string name="add_cheese">add Cheese</string>
 </resources>

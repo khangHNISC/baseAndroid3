@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
@@ -13,6 +14,7 @@ import androidx.lifecycle.ViewModel
 import com.example.basemvvm3.R
 import com.example.basemvvm3.fragment.sub.SubFragment2
 import com.example.basemvvm3.fragment.sub.SubFragment21
+import com.example.basemvvm3.fragment.sub.SubFragment22
 import com.example.basemvvm3.helper.MainNavigationFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main_2.*
@@ -45,15 +47,16 @@ class MainFragment2 : MainNavigationFragment() {
 
         setupViewPager()
 
-        fab.setOnClickListener(View.OnClickListener { view ->
-            Snackbar.make(view, "Here's a Snackbar", Snackbar.LENGTH_LONG)
+        fab.setOnClickListener(View.OnClickListener {
+            Snackbar.make(view, "Here's a SnackBar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         })
     }
 
     private fun setupViewPager() {
         viewpager.adapter = object :
-            FragmentStatePagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+//        FragmentStatePagerAdapter for large number of tabs
+            FragmentPagerAdapter(childFragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
             private val mFragments = arrayListOf<Fragment>()
             private val mFragmentTitles = arrayListOf<String>()
 
@@ -67,11 +70,13 @@ class MainFragment2 : MainNavigationFragment() {
             override fun getCount() = mFragments.size
 
             override fun getPageTitle(pos: Int): String = mFragmentTitles[pos]
-        }.also {
-            it.addFragment(SubFragment2(), "Simple RV")
-            it.addFragment(SubFragment21(), "Multi RV")
+        }.apply {
+            addFragment(SubFragment2(), "Simple RV")
+            addFragment(SubFragment21(), "Multi RV")
+            addFragment(SubFragment22(), "PageList RV")
         }
-
+        //default 1 so if u has 3 tabs and don't want fragment to be destroy set to 2
+        viewpager.offscreenPageLimit = 2
         tabs.setupWithViewPager(viewpager)
     }
 

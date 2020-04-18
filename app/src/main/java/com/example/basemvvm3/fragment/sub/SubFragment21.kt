@@ -4,21 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PersonItem
 import com.example.basemvvm3.classes.data.PersonList
 import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.fragment.adapter.*
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.sub_fragment_2.*
+import javax.inject.Inject
+import javax.inject.Named
 import kotlin.random.Random
 
-class SubFragment21 : Fragment() {
+class SubFragment21 : DaggerFragment() {
 
     private var adapter: MultiViewItemAdapter? = null
     private lateinit var personViewBinder: PersonListViewBinder
-    private val recyclerViewPool = RecyclerView.RecycledViewPool()
+
+    @Inject
+    @field:Named("personListViewPool")
+    lateinit var personListViewPool: RecyclerView.RecycledViewPool
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,7 +41,7 @@ class SubFragment21 : Fragment() {
         if (::personViewBinder.isInitialized) {
             outState.putBundle(
                 BUNDLE_KEY_SESSIONS_LAYOUT_MANAGER_STATE,
-                personViewBinder.recyclerViewManagerState
+                personViewBinder.saveState
             )
         }
         super.onSaveInstanceState(outState)
@@ -47,7 +52,7 @@ class SubFragment21 : Fragment() {
 
         if (adapter == null) {
             personViewBinder = PersonListViewBinder(
-                recyclerViewPool,
+                personListViewPool,
                 savedInstanceState?.getBundle(
                     BUNDLE_KEY_SESSIONS_LAYOUT_MANAGER_STATE
                 )
@@ -95,7 +100,7 @@ class SubFragment21 : Fragment() {
         }
         if (recyclerView.adapter == null) {
             recyclerView.adapter = adapter
-            recyclerView.setRecycledViewPool(recyclerViewPool)
+            recyclerView.setRecycledViewPool(personListViewPool)
         }
         (recyclerView.adapter as MultiViewItemAdapter).submitList(list ?: emptyList())
 

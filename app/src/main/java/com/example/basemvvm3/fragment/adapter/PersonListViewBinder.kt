@@ -11,16 +11,19 @@ import com.example.basemvvm3.classes.data.PersonList
 import kotlinx.android.synthetic.main.item_person_list.view.*
 
 class PersonListViewBinder(
-    private val viewPool: RecyclerView.RecycledViewPool,
-    var recyclerViewManagerState: Bundle? = null
+    private val personListViewPool: RecyclerView.RecycledViewPool,
+    var saveState: Bundle?
 ) : BaseViewBinder<PersonList, PersonListViewHolder>(PersonList::class.java) {
+
     init {
-        recyclerViewManagerState = Bundle()
+        if (saveState == null) {
+            saveState = Bundle()
+        }
     }
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val viewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        val holder = PersonListViewHolder(viewHolder)
+        val inflater = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        val holder = PersonListViewHolder(inflater)
 
         holder.itemView.findViewById<RecyclerView>(R.id.recyclerview)
             .addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -38,8 +41,8 @@ class PersonListViewBinder(
     override fun bindViewHolder(model: PersonList, viewHolder: PersonListViewHolder) {
         viewHolder.bind(
             model,
-            viewPool,
-            recyclerViewManagerState?.getParcelable(viewHolder.adapterPosition.toString())
+            personListViewPool,
+            saveState?.getParcelable(viewHolder.adapterPosition.toString())
         )
     }
 
@@ -60,7 +63,7 @@ class PersonListViewBinder(
         if (viewHolder.adapterPosition == RecyclerView.NO_POSITION) {
             return
         }
-        recyclerViewManagerState?.putParcelable(
+        saveState?.putParcelable(
             viewHolder.adapterPosition.toString(),
             viewHolder.getLayoutManagerState()
         )

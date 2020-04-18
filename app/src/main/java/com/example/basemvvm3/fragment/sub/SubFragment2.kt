@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.fragment.adapter.PhotoAdapter
+import com.example.basemvvm3.fragment.adapter.PhotoLoading
 import com.example.basemvvm3.helper.Result
 import com.example.basemvvm3.helper.checkAllMatched
 import com.example.basemvvm3.helper.viewModelProvider
@@ -36,7 +37,6 @@ class SubFragment2 : DaggerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         vm = viewModelProvider(viewModelFactory)
     }
 
@@ -56,7 +56,7 @@ class SubFragment2 : DaggerFragment() {
         }
 
         vm.resultListPhoto.observe(viewLifecycleOwner, Observer { result ->
-            when(result){
+            when (result) {
                 is Result.Success -> {
                     listPhoto = result.data
                     showPhotoItem(recyclerview, getSubList(listPhoto, true))
@@ -73,7 +73,7 @@ class SubFragment2 : DaggerFragment() {
         vm.getPhoto()
     }
 
-    private fun showPhotoItem(rv: RecyclerView, list: List<PhotoItem>) {
+    private fun showPhotoItem(rv: RecyclerView, list: List<Any>) {
         if (adapter == null) {
             adapter = PhotoAdapter(vm)
 
@@ -87,7 +87,6 @@ class SubFragment2 : DaggerFragment() {
             }
         }
         if (rv.adapter == null) {
-
             rv.adapter = adapter
         }
         (rv.adapter as PhotoAdapter).submitList(list)
@@ -101,12 +100,12 @@ class SubFragment2 : DaggerFragment() {
     /**
      * this is fake data
      */
-    private fun getSubList(list: List<PhotoItem>, resetIndex: Boolean = false): List<PhotoItem> {
+    private fun getSubList(list: List<Any>, resetIndex: Boolean = false): List<Any> {
         if (resetIndex) indexList = 0
         indexList += 40
         val listAdapter = list.subList(0, indexList).toMutableList()
         if (indexList < list.size) {
-            listAdapter.add(PhotoItem("", "", "", "", ""))
+            listAdapter.add(PhotoLoading)
         }
         return listAdapter
     }
