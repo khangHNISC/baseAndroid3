@@ -29,15 +29,15 @@ VH:
     4. if not RV -> getViewType -> Adapter
     5. Adapter return -> RV -> getVHByType -> RVPool
     6. if no -> RV -> createVH -> Adapter -> pass to LM
-    7. if yes -> RV -> bindVH (VH to position) -> pass to LM
+    7. if yes -> RV -> bindVH on Adapter -> pass to LM
     8. Eventually, LM -> addView -> RV
     9. RV -> onViewAttachedToWindow -> Adapter
 
         2. Reverse
     1. LM -> removeAndRecycleView (a View) -> RV
-    2. RV -> onViewDetachedFromWindow -> Adapter
-    3. RV -> isValid  (a View) -> yes -> put to cache
-                               -> no -> go to RVPool
+    2. RV -> onViewDetachedFromWindow -> Adapter (remove + uncached expensive things)
+    3. RV -> isValidForPosition (a View) -> yes -> put to cache
+                                         -> no -> go to RVPool
     4. cache -> recycle (oldest cache) -> RVPool
     5. RVPool -> onViewRecycled (oldest cache) -> Adapter
 
@@ -53,9 +53,9 @@ VH:
 
         4. Death
     1. LM -> removeAndRecycleView -> RV
-    2. RV check is valid -> RVPool
-    3. if No -> RVPool check view has TransientState (animate purpose)
-    4. if yes -> onFailedToRecycle -> Adapter
+    2. RV check is valid -> Cache
+    3. No -> RVPool check view has TransientState (animate purpose)
+    4. Yes -> onFailedToRecycle -> Adapter
     5. if onFailedToRecycle not Implemented (default return false) adapter kills VH
 
 Use ItemAnimator Interface for best Optimize
@@ -63,6 +63,7 @@ Use ItemAnimator Interface for best Optimize
         5. Death2
     1. RV -> addViewToPool but RVPool has limited Size per type VH
     (pool.setMaxRecycledViews (type, count))
+    why: didnt cache (too many vh of the same type) and animate crossfade = notifyItemRangeChange
 
 ItemTouchHelper for drop and drag
 NOte:
@@ -77,3 +78,6 @@ use holder.getAdapterPosition() instead
     Scroll Up
     1. if in Cache: detach then attach
     2. if in Pool: detach bind attach
+
+//payload
+//ItemDecor

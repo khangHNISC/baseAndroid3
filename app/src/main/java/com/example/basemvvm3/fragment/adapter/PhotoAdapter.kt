@@ -47,6 +47,8 @@ internal class PhotoAdapter(
         }
     }
 
+
+
     override fun onViewAttachedToWindow(holder: PhotoGeneralViewHolder) {
         super.onViewAttachedToWindow(holder)
         //Timber.e("4. Attach")

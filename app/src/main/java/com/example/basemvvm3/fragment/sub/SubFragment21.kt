@@ -99,7 +99,9 @@ class SubFragment21 : DaggerFragment() {
         }
         if (recyclerView.adapter == null) {
             recyclerView.adapter = adapter
+            personListViewPool.setMaxRecycledViews(R.layout.item_person, Int.MAX_VALUE)
             recyclerView.setRecycledViewPool(personListViewPool)
+            //recyclerView.setItemViewCacheSize(20)//default 2
         }
         (recyclerView.adapter as MultiViewItemAdapter).submitList(list ?: emptyList())
 
