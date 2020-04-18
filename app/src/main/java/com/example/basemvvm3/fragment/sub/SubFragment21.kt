@@ -88,7 +88,6 @@ class SubFragment21 : DaggerFragment() {
     //pass vm to adapter
     private fun showItems(recyclerView: RecyclerView, list: List<Any>?) {
         if (adapter == null) {
-            val viewPool = recyclerView.recycledViewPool
             val photoViewBinder = PhotoViewBinder()
 
             @Suppress("UNCHECKED_CAST")
