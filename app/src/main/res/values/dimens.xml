@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_small">8dp</dimen>
+    <dimen name="standard_medium">16dp</dimen>
+    <dimen name="standard_large">32dp</dimen>
+    <dimen name="button_width">120dp</dimen>
+    <dimen name="button_height">40dp</dimen>
+    <dimen name="margin_start_guide_line">24dp</dimen>
+    <dimen name="margin_end_guide_line">48dp</dimen>
+    <dimen name="item_loading_height">40dp</dimen>
+    <dimen name="image_height">40dp</dimen>
+    <dimen name="image_width">40dp</dimen>
+</resources>

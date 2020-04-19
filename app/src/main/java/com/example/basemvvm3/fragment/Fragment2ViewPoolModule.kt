@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Named
 
 @Module
-internal class Fragment2ViewPool {
+internal class Fragment2ViewPoolModule {
 
     @FragmentScoped
     @Provides

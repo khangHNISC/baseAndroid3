@@ -1,10 +1,7 @@
 package com.example.basemvvm3.di.component
 
 import com.example.basemvvm3.classes.AppApplication
-import com.example.basemvvm3.di.module.ActivityBindingModule
-import com.example.basemvvm3.di.module.AppModule
-import com.example.basemvvm3.di.module.NetworkModule
-import com.example.basemvvm3.di.module.ViewModelModule
+import com.example.basemvvm3.di.module.*
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjectionModule
@@ -17,6 +14,7 @@ import javax.inject.Singleton
     ActivityBindingModule::class,
     AppModule::class,
     NetworkModule::class,
+    DataBaseModule::class,
     ViewModelModule::class
 ])
 interface AppComponent: AndroidInjector<AppApplication> {

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/tagName"
+    android:paddingStart="@dimen/standard_small"
+    android:paddingEnd="@dimen/standard_small"
+    style="@style/TextAppearance.AppCompat.Medium"
+    android:layout_marginBottom="@dimen/standard_small"
+    android:layout_marginTop="@dimen/standard_small" />
+
+
+

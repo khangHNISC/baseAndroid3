@@ -38,12 +38,12 @@ class SubFragment21 : DaggerFragment() {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        if (::personViewBinder.isInitialized) {
+        /*if (::personViewBinder.isInitialized) {
             outState.putBundle(
                 BUNDLE_KEY_SESSIONS_LAYOUT_MANAGER_STATE,
                 personViewBinder.saveState
             )
-        }
+        }*/
         super.onSaveInstanceState(outState)
     }
 
@@ -53,9 +53,10 @@ class SubFragment21 : DaggerFragment() {
         if (adapter == null) {
             personViewBinder = PersonListViewBinder(
                 personListViewPool,
-                savedInstanceState?.getBundle(
+                Bundle()
+                /*savedInstanceState?.getBundle(
                     BUNDLE_KEY_SESSIONS_LAYOUT_MANAGER_STATE
-                )
+                )*/
             )
         }
 

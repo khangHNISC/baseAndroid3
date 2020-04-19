@@ -3,7 +3,6 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
     android:orientation="vertical">
     <LinearLayout
@@ -15,6 +14,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:autofillHints="@string/insert_new_tag_hint"
+            android:hint="@string/insert_new_tag_hint"
             android:imeOptions="actionDone"
             android:inputType="text"
             android:maxLines="1"/>
@@ -27,7 +28,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cheeseList"
+        android:id="@+id/tagList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

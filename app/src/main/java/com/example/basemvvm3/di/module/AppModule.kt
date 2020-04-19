@@ -24,5 +24,4 @@ class AppModule {
     @Provides
     fun provideClipBoardManager(context: Context): ClipboardManager =
         context.applicationContext.getSystemService((Context.CLIPBOARD_SERVICE)) as ClipboardManager
-
 }

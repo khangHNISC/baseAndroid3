@@ -2,17 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
+    android:paddingLeft="@dimen/standard_medium"
+    android:paddingRight="@dimen/standard_medium"
+    android:paddingTop="@dimen/standard_small"
+    android:paddingBottom="@dimen/standard_small"
     android:orientation="vertical"
     android:gravity="center_vertical">
 
     <ImageView
         android:id="@+id/avatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="@dimen/image_width"
+        android:layout_height="@dimen/image_height"
         android:layout_marginBottom="2dp"
         android:contentDescription="@string/avatar" />
 
@@ -20,7 +20,7 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"/>
+        android:layout_marginEnd="@dimen/standard_medium"/>
 
     <TextView
         android:id="@+id/age"

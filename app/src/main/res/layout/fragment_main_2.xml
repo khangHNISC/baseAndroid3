@@ -41,6 +41,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/standard_medium"
         android:src="@drawable/ic_feedback" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -3,8 +3,7 @@ package com.example.basemvvm3.fragment.sub
 import androidx.lifecycle.ViewModel
 import com.example.basemvvm3.di.ViewModelKey
 import com.example.basemvvm3.di.scope.FragmentScoped
-import com.example.basemvvm3.fragment.Fragment2ViewPool
-import com.example.basemvvm3.fragment.SubFragment22ViewModel
+import com.example.basemvvm3.fragment.Fragment2ViewPoolModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -23,7 +22,7 @@ internal abstract class SubFragmentModule {
 
     @FragmentScoped
     @ContributesAndroidInjector(
-        modules = [Fragment2ViewPool::class]
+        modules = [Fragment2ViewPoolModule::class]
     )
     internal abstract fun contributeSubFragment21(): SubFragment21
 

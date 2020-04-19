@@ -15,12 +15,6 @@ class PersonListViewBinder(
     var saveState: Bundle?
 ) : BaseViewBinder<PersonList, PersonListViewHolder>(PersonList::class.java) {
 
-    init {
-        if (saveState == null) {
-            saveState = Bundle()
-        }
-    }
-
     override fun createViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val inflater = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
         val holder = PersonListViewHolder(inflater)

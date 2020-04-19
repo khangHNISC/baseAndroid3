@@ -10,8 +10,8 @@
     <string name="icon_home">icon home</string>
     <string name="icon_list">icon_list</string>
     <string name="icon_feedback">icon feedback</string>
-    <string name="home">Home</string>
-    <string name="list">List</string>
+    <string name="dialog_Ex">Dialog Ex</string>
+    <string name="recycler_view_Ex">Recycler View Ex</string>
     <string name="feedback">Feedback</string>
     <string name="menu_night_mode">night_mode</string>
     <string name="menu_night_mode_system">menu_night_mode_system</string>
@@ -20,4 +20,6 @@
     <string name="menu_night_mode_auto">menu_night_mode_auto</string>
     <string name="avatar">avatar</string>
     <string name="add_cheese">add Cheese</string>
+    <string name="insert_new_tag_hint">Insert new Tag</string>
+    <string name="nav_header">Username</string>
 </resources>

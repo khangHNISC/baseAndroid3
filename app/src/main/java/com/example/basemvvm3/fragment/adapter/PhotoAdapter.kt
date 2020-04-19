@@ -47,8 +47,6 @@ internal class PhotoAdapter(
         }
     }
 
-
-
     override fun onViewAttachedToWindow(holder: PhotoGeneralViewHolder) {
         super.onViewAttachedToWindow(holder)
         //Timber.e("4. Attach")
@@ -75,12 +73,10 @@ internal sealed class PhotoGeneralViewHolder(itemView: View) : RecyclerView.View
         ) {
             itemView.apply {
                 text1.text = item.title
-                val imgUrl =
-                    "https://moodle.fhgr.ch/pluginfile.php/124614/mod_page/content/4/example.jpg"
-                val options = RequestOptions()
+                val imgUrl = "https://moodle.fhgr.ch/pluginfile.php/124614/mod_page/content/4/example.jpg"
                 Glide.with(itemView.context)
                     .load(imgUrl)
-                    .apply(options.fitCenter())
+                    .apply(RequestOptions().fitCenter())
                     .into(avatar)
 
                 setOnClickListener {
