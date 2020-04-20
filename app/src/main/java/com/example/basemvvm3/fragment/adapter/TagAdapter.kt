@@ -27,8 +27,10 @@ class TagAdapter() : PagedListAdapter<TagEntity, TagViewHolder>(TagDiffCallBack)
 }
 
 class TagViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    var tag : TagEntity? = null
     
     fun bind(item: TagEntity?){
+        tag = item
         itemView.apply{
             tagName.text = item?.name
         }

@@ -6,15 +6,17 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import com.example.basemvvm3.classes.data.db.AppDatabase
 import com.example.basemvvm3.classes.data.db.TagEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 interface TagRepository {
 
     fun getAllUser(): LiveData<PagedList<TagEntity>>
 
-    fun insertTag(tag: TagEntity)
+    suspend fun insertTag(tagName: String)
 
-    fun deleteTag(tag: TagEntity)
+    suspend fun deleteTag(tag: TagEntity)
 }
 
 class TagRepositoryImpl @Inject constructor(
@@ -25,14 +27,14 @@ class TagRepositoryImpl @Inject constructor(
         Config(pageSize = 60, enablePlaceholders = false, maxSize = 200)
     )
 
-    override fun insertTag(tag: TagEntity) {
-        db.runInTransaction {
-            db.tagDao().insert(tag)
+    override suspend fun insertTag(tagName: String) {
+        withContext(Dispatchers.IO) {
+            db.tagDao().insert(TagEntity(id = 0, name = tagName))
         }
     }
 
-    override fun deleteTag(tag: TagEntity) {
-        db.runInTransaction {
+    override suspend fun deleteTag(tag: TagEntity) {
+        withContext(Dispatchers.IO) {
             db.tagDao().delete(tag)
         }
     }

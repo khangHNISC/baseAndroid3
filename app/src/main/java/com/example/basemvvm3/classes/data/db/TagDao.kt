@@ -12,11 +12,11 @@ interface TagDao {
     fun allTag(): DataSource.Factory<Int, TagEntity>
 
     @Insert
-    fun insert(tag: List<TagEntity>)
+    suspend fun insert(tag: List<TagEntity>)
 
     @Insert
-    fun insert(tag: TagEntity)
+    suspend fun insert(tag: TagEntity)
 
     @Delete
-    fun delete(tag: TagEntity)
+    suspend fun delete(tag: TagEntity)
 }
