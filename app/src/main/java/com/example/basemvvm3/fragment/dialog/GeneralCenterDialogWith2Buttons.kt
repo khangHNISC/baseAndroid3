@@ -9,6 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.basemvvm3.R
 import dagger.android.support.DaggerDialogFragment
 import kotlinx.android.synthetic.main.general_dialog_with_2_buttons.*
@@ -22,6 +26,19 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.general_dialog_with_2_buttons, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        btnPositive.setOnClickListener {
+            findNavController(this).navigate(R.id.navigation_sub_fragment)
+            dismiss()
+        }
+
+        btnNegative.setOnClickListener {
+            dismiss()
+        }
     }
 
     override fun onStart() {
@@ -39,21 +56,6 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
                 0
             )
         )
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        btnPositive.setOnClickListener {
-            parentFragment?.view?.let {
-                Navigation.findNavController(it).navigate(R.id.navigation_sub_fragment)
-            }
-            dismiss()
-        }
-
-        btnNegative.setOnClickListener {
-            dismiss()
-        }
     }
 
     companion object {

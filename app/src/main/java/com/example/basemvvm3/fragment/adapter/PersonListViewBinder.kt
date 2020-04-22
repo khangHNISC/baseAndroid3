@@ -8,11 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PersonList
+import com.example.basemvvm3.helper.EventAction
 import kotlinx.android.synthetic.main.item_person_list.view.*
 
 class PersonListViewBinder(
     private val personListViewPool: RecyclerView.RecycledViewPool,
-    var saveState: Bundle?
+    private var saveState: Bundle?,
+    private val eventListener: EventAction
 ) : BaseViewBinder<PersonList, PersonListViewHolder>(PersonList::class.java) {
 
     override fun createViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,7 +38,8 @@ class PersonListViewBinder(
         viewHolder.bind(
             model,
             personListViewPool,
-            saveState?.getParcelable(viewHolder.adapterPosition.toString())
+            saveState?.getParcelable(viewHolder.adapterPosition.toString()),
+            eventListener
         )
     }
 
@@ -71,11 +74,12 @@ class PersonListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(
         model: PersonList,
         viewPool: RecyclerView.RecycledViewPool,
-        layoutManagerState: Parcelable?
+        layoutManagerState: Parcelable?,
+        eventListener: EventAction
     ) {
         itemView.apply {
             if (recyclerview.adapter == null) {
-                recyclerview.adapter = PersonAdapter()
+                recyclerview.adapter = PersonAdapter(eventListener)
                 recyclerview.setRecycledViewPool(viewPool)
                 layoutManager = recyclerview.layoutManager
             }

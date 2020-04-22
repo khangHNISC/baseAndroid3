@@ -10,10 +10,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PersonItem
+import com.example.basemvvm3.helper.EventAction
 import kotlinx.android.synthetic.main.item_person.view.*
-import kotlinx.android.synthetic.main.item_person.view.avatar
 
-class PersonAdapter() : ListAdapter<PersonItem, PersonItemViewHolder>(PersonDiffUtil) {
+class PersonAdapter(private val eventListener: EventAction) :
+    ListAdapter<PersonItem, PersonItemViewHolder>(PersonDiffUtil) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PersonItemViewHolder {
         val viewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
@@ -21,7 +22,7 @@ class PersonAdapter() : ListAdapter<PersonItem, PersonItemViewHolder>(PersonDiff
     }
 
     override fun onBindViewHolder(holder: PersonItemViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), eventListener)
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -31,8 +32,8 @@ class PersonAdapter() : ListAdapter<PersonItem, PersonItemViewHolder>(PersonDiff
 
 class PersonItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    fun bind(item: PersonItem){
-        itemView.apply{
+    fun bind(item: PersonItem, eventListener: EventAction) {
+        itemView.apply {
             name.text = item.name
             age.text = item.age.toString()
             val imgUrl =
@@ -42,6 +43,10 @@ class PersonItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 .load(imgUrl)
                 .apply(options.fitCenter())
                 .into(avatar)
+
+            setOnClickListener {
+                eventListener.openEventDetail(item)
+            }
         }
     }
 }

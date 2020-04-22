@@ -37,6 +37,11 @@ internal abstract class SubFragmentModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(SubFragment21ViewModel::class)
+    internal abstract fun bindMainViewModel21(viewModel: SubFragment21ViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(SubFragment22ViewModel::class)
     internal abstract fun bindMainViewModel22(viewModel: SubFragment22ViewModel): ViewModel
 }

@@ -5,6 +5,7 @@ import com.example.basemvvm3.activities.MainActivityModule
 import com.example.basemvvm3.di.scope.ActivityScoped
 import com.example.basemvvm3.fragment.MainFragment2Module
 import com.example.basemvvm3.fragment.MainFragmentModule
+import com.example.basemvvm3.fragment.sub.DetailFragmentsModule
 import com.example.basemvvm3.fragment.sub.SubFragmentModule
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -18,7 +19,8 @@ abstract class ActivityBindingModule {
             MainActivityModule::class,
             MainFragmentModule::class,
             MainFragment2Module::class,
-            SubFragmentModule::class
+            SubFragmentModule::class,
+            DetailFragmentsModule::class
         ]
     )
     internal abstract fun mainActivity(): MainActivity

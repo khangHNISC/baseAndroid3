@@ -4,12 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PersonItem
 import com.example.basemvvm3.classes.data.PersonList
 import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.fragment.adapter.*
+import com.example.basemvvm3.fragment.sub.SubFragment21Directions.Companion.actionSubFragment21ToPersonDetailFragment
+import com.example.basemvvm3.helper.viewModelProvider
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.sub_fragment_2.*
 import javax.inject.Inject
@@ -25,8 +30,14 @@ class SubFragment21 : DaggerFragment() {
     @field:Named("personListViewPool")
     lateinit var personListViewPool: RecyclerView.RecycledViewPool
 
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private lateinit var vm: SubFragment21ViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vm = viewModelProvider(viewModelFactory)
     }
 
     override fun onCreateView(
@@ -53,10 +64,11 @@ class SubFragment21 : DaggerFragment() {
         if (adapter == null) {
             personViewBinder = PersonListViewBinder(
                 personListViewPool,
-                Bundle()
+                Bundle(),
                 /*savedInstanceState?.getBundle(
                     BUNDLE_KEY_SESSIONS_LAYOUT_MANAGER_STATE
                 )*/
+                vm
             )
         }
 
@@ -64,6 +76,10 @@ class SubFragment21 : DaggerFragment() {
         swipeRefreshLayout.isEnabled = false
 
         showItems(recyclerview, initList())
+
+        vm.navigateToPersonDetail.observe(viewLifecycleOwner, Observer { personItem ->
+            openPersonDetails(personItem)
+        })
     }
 
     /**
@@ -108,6 +124,11 @@ class SubFragment21 : DaggerFragment() {
 
         loading.visibility = View.INVISIBLE
         recyclerview.visibility = View.VISIBLE
+    }
+
+    private fun openPersonDetails(personItem: PersonItem) {
+        //val action = actionSubFragment21ToPersonDetailFragment(personName = personItem.name)
+        findNavController().navigate(R.id.navigation_sub_fragment)
     }
 
     companion object {

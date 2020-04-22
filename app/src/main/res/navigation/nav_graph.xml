@@ -11,9 +11,11 @@
         android:name="com.example.basemvvm3.fragment.MainFragment"
         android:label="MainFragment" >
         <action
-            android:id="@+id/action_mainFragment_to_subFragment"
-            app:destination="@id/navigation_sub_fragment"
-            app:popUpTo="@id/navigation_main_fragment" />
+            android:id="@+id/action_navigation_main_fragment_to_generalCenterDialogWith2Buttons"
+            app:destination="@id/generalCenterDialogWith2Buttons" />
+        <action
+            android:id="@+id/action_navigation_main_fragment_to_generalBottomDialog"
+            app:destination="@id/generalBottomDialog" />
     </fragment>
     <fragment
         android:id="@id/navigation_main_fragment_2"
@@ -32,14 +34,7 @@
     <fragment
         android:id="@+id/navigation_sub_fragment"
         android:name="com.example.basemvvm3.fragment.sub.SubFragment"
-        android:label="SubFragment" >
-        <action
-            android:id="@+id/action_navigation_sub_fragment_to_generalCenterDialogWith2Buttons"
-            app:destination="@id/generalCenterDialogWith2Buttons" />
-        <action
-            android:id="@+id/action_navigation_sub_fragment_to_generalBottomDialog"
-            app:destination="@id/generalBottomDialog" />
-    </fragment>
+        android:label="SubFragment" />
     <dialog
         android:id="@+id/generalBottomDialog"
         android:name="com.example.basemvvm3.fragment.dialog.GeneralBottomDialog"
@@ -47,7 +42,11 @@
     <dialog
         android:id="@+id/generalCenterDialogWith2Buttons"
         android:name="com.example.basemvvm3.fragment.dialog.GeneralCenterDialogWith2Buttons"
-        android:label="GeneralCenterDialogWith2Buttons" />
+        android:label="GeneralCenterDialogWith2Buttons" >
+        <action
+            android:id="@+id/action_generalCenterDialogWith2Buttons_to_navigation_sub_fragment"
+            app:destination="@id/navigation_sub_fragment" />
+    </dialog>
     <fragment
         android:id="@+id/subFragment2"
         android:name="com.example.basemvvm3.fragment.sub.SubFragment2"
@@ -55,9 +54,22 @@
     <fragment
         android:id="@+id/subFragment21"
         android:name="com.example.basemvvm3.fragment.sub.SubFragment21"
-        android:label="SubFragment21" />
+        android:label="SubFragment21" >
+        <action
+            android:id="@+id/action_subFragment21_to_personDetailFragment"
+            app:destination="@id/personDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/subFragment22"
         android:name="com.example.basemvvm3.fragment.sub.SubFragment22"
         android:label="SubFragment22" />
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.example.basemvvm3.fragment.sub.PersonDetailFragment"
+        android:label="PersonDetailFragment" >
+        <argument
+            android:name="personName"
+            app:argType="string"
+            android:defaultValue='"aName"' />
+    </fragment>
 </navigation>
