@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.basemvvm3.R
 import com.example.basemvvm3.helper.MainNavigationFragment
-import dagger.android.support.DaggerFragment
-import kotlinx.android.synthetic.main.sub_fragment.*
+import kotlinx.android.synthetic.main.detail_person.*
+import timber.log.Timber
 
-class PersonDetailFragment: MainNavigationFragment(){
+class PersonDetailFragment : MainNavigationFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,15 +21,13 @@ class PersonDetailFragment: MainNavigationFragment(){
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.sub_fragment, container, false)
+        return inflater.inflate(R.layout.detail_person, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        toolbar.setNavigationOnClickListener {
-            findNavController().navigate(R.id.navigation_main_fragment_2)
-        }
+        Timber.e(findNavController().currentDestination?.label.toString())
     }
 
     override fun onStart() {

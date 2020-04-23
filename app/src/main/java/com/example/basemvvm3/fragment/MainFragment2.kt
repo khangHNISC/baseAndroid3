@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.basemvvm3.R
@@ -14,6 +13,7 @@ import com.example.basemvvm3.classes.data.PersonItem
 import com.example.basemvvm3.fragment.sub.SubFragment2
 import com.example.basemvvm3.fragment.sub.SubFragment21
 import com.example.basemvvm3.fragment.sub.SubFragment22
+import com.example.basemvvm3.helper.EventObserver
 import com.example.basemvvm3.helper.MainNavigationFragment
 import com.example.basemvvm3.helper.viewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -21,7 +21,6 @@ import kotlinx.android.synthetic.main.fragment_main_2.*
 import javax.inject.Inject
 
 class MainFragment2 : MainNavigationFragment() {
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -43,6 +42,7 @@ class MainFragment2 : MainNavigationFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         vm = requireActivity().viewModelProvider(viewModelFactory)
+        retainInstance = true
     }
 
     override fun onCreateView(
@@ -58,27 +58,42 @@ class MainFragment2 : MainNavigationFragment() {
 
         setupViewPager()
 
-        fab.setOnClickListener{
+        fab.setOnClickListener {
             Snackbar.make(view, "Here's a SnackBar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
 
-        vm.navigateToPersonDetail.observe(viewLifecycleOwner, Observer { personItem ->
+        vm.navigateToPersonDetail.observe(viewLifecycleOwner, EventObserver { personItem ->
             openPersonDetails(personItem)
         })
     }
 
     private fun setupViewPager() {
-        viewpager.adapter = object : FragmentStatePagerAdapter(childFragmentManager) {
-            //FragmentStatePagerAdapter for large number of tabs
-            override fun getItem(position: Int) = FRAG_LIST[position]()
-
+        viewpager.adapter = object : FragmentStatePagerAdapter(
+            childFragmentManager,
+            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+        ) {
             override fun getCount() = FRAG_LIST.size
 
-            override fun getPageTitle(pos: Int): String = FRAG_TITLES[pos]
+            override fun getItem(position: Int) = FRAG_LIST[position]()
+
+            override fun getPageTitle(position: Int) = FRAG_TITLES[position]
         }
         viewpager.offscreenPageLimit = FRAG_LIST.size
         tabs.setupWithViewPager(viewpager)
+
+        //Meant for VP 2
+        /*viewpager.adapter = object : FragmentStateAdapter(this) {
+            override fun getItemCount(): Int = FRAG_LIST.size
+
+            override fun createFragment(position: Int): Fragment = FRAG_LIST[position]()
+
+        }
+
+        TabLayoutMediator(tabs, viewpager) { tab, position ->
+            tab.text = FRAG_TITLES[position]
+            //can set tag Icon here
+        }.attach()*/
     }
 
     companion object {
@@ -97,8 +112,8 @@ class MainFragment2 : MainNavigationFragment() {
     }
 
     private fun openPersonDetails(personItem: PersonItem) {
-        val navController = findNavController()
         //Timber.d(navController.currentDestination?.displayName) --- get the display name of current navController
+        val navController = findNavController()
         val action =
             MainFragment2Directions.actionNavigationMainFragment2ToPersonDetailFragment2(personName = personItem.name)
         navController.navigate(action)

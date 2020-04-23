@@ -82,10 +82,11 @@ class SubFragment21 : DaggerFragment() {
     private fun initList(): List<Any>? {
         val l = mutableListOf<Any>()
         for ((i, _) in (0..30).withIndex()) {
-            val chance = Random.nextInt(0, 2)
+            //val chance = Random.nextInt(0, 2)
+            val chance = i%2
             if (chance == 0) {
                 val list = PersonList("$i", arrayListOf())
-                for (m in 0..9) {
+                for (m in 0..13) {
                     list.list.add(PersonItem(1, "MR${i + m}", 30))
                 }
                 l.add(list)

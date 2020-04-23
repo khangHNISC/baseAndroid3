@@ -44,12 +44,6 @@ class MainFragment : MainNavigationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
-            ?.observe(viewLifecycleOwner, Observer { result ->
-                // Do something with the result.
-                Timber.d(result)
-            })
-
         btn_dialog_center.setOnClickListener {
             findNavController().navigate(R.id.generalCenterDialogWith2Buttons)
         }
@@ -59,6 +53,12 @@ class MainFragment : MainNavigationFragment() {
         }
 
         prepareToolBar(toolbar)
+
+/*        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
+            ?.observe(viewLifecycleOwner, Observer { result ->
+                // Do something with the result.
+                Timber.d(result)
+            })*/
     }
 
     private fun prepareToolBar(toolbar: Toolbar) {
