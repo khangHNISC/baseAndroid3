@@ -52,10 +52,10 @@ class SubFragment2 : DaggerFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         swipeRefreshLayout.setOnRefreshListener {
-            vm.getPhoto()
+            vm.loadPhoto()
         }
 
-        vm.resultListPhoto.observe(viewLifecycleOwner, Observer { result ->
+        vm.resultListPhoto2.observe(viewLifecycleOwner, Observer { result ->
             when (result) {
                 is Result.Success -> {
                     listPhoto = result.data
@@ -70,7 +70,7 @@ class SubFragment2 : DaggerFragment() {
             }.checkAllMatched
         })
 
-        vm.getPhoto()
+        vm.loadPhoto()
     }
 
     private fun showPhotoItem(rv: RecyclerView, list: List<Any>) {

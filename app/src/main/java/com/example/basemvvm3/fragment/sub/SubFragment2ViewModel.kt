@@ -1,46 +1,31 @@
 package com.example.basemvvm3.fragment.sub
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.classes.repository.PhotoRepository
 import com.example.basemvvm3.helper.Result
-import kotlinx.coroutines.async
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
-import java.lang.Exception
 import javax.inject.Inject
 
 class SubFragment2ViewModel @Inject constructor(
     private val repo: PhotoRepository
 ) : ViewModel(), SubFragment2EventListener {
 
-    private val _resultListPhoto = MutableLiveData<Result<List<PhotoItem>>>()
+    val resultListPhoto: LiveData<Result<List<PhotoItem>>> = liveData {
+        emit(Result.Loading)
+        emit(repo.getPhoto())
+    }
 
-    val resultListPhoto: LiveData<Result<List<PhotoItem>>>
-        get() = _resultListPhoto
+    val resultListPhoto2: LiveData<Result<List<PhotoItem>>> = MutableLiveData()
 
-    fun getPhoto() {
-        _resultListPhoto.postValue(Result.Loading)
-        viewModelScope.async {
-            val response = repo.getPhoto()
-            if (response.isSuccessful) {
-                _resultListPhoto.postValue(
-                    Result.Success(response.body()?.map {
-                        PhotoItem(
-                            it.albumID ?: "",
-                            it.id ?: "",
-                            it.title ?: "",
-                            it.url ?: "",
-                            it.thumbnailUrl ?: ""
-                        )
-                    } ?: emptyList())
-                )
-            } else {
-                //post error
-                _resultListPhoto.postValue(Result.Error(Exception("Server Error")))
-            }
+    fun loadPhoto() = viewModelScope.launch(Dispatchers.IO) {
+        repo.getPhoto().apply {
+            val mutableLiveData = resultListPhoto2 as MutableLiveData
+
+            mutableLiveData.postValue(Result.Loading)
+            mutableLiveData.postValue(this)
         }
     }
 
