@@ -31,7 +31,7 @@ class PersonDetailFragment: DaggerFragment(){
 
         requireNotNull(arguments).apply {
             val personName = PersonDetailFragmentArgs.fromBundle(this).personName
-            text.text = personName
+            btn.text = personName
         }
     }
 }

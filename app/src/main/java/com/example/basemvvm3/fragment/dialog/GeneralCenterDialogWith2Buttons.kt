@@ -8,10 +8,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.navigation.Navigation
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.basemvvm3.R
 import dagger.android.support.DaggerDialogFragment
@@ -32,8 +28,8 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btnPositive.setOnClickListener {
-            findNavController(this).navigate(R.id.navigation_sub_fragment)
-            dismiss()
+            //better way to communicate with prevfragment
+            findNavController().previousBackStackEntry?.savedStateHandle?.set("key", "abc")
         }
 
         btnNegative.setOnClickListener {
@@ -56,12 +52,5 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
                 0
             )
         )
-    }
-
-    companion object {
-
-        fun newInstance(): GeneralCenterDialogWith2Buttons {
-            return GeneralCenterDialogWith2Buttons()
-        }
     }
 }

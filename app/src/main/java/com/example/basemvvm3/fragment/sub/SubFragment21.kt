@@ -13,7 +13,6 @@ import com.example.basemvvm3.classes.data.PersonItem
 import com.example.basemvvm3.classes.data.PersonList
 import com.example.basemvvm3.classes.data.PhotoItem
 import com.example.basemvvm3.fragment.adapter.*
-import com.example.basemvvm3.fragment.sub.SubFragment21Directions.Companion.actionSubFragment21ToPersonDetailFragment
 import com.example.basemvvm3.helper.viewModelProvider
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.sub_fragment_2.*
@@ -128,7 +127,7 @@ class SubFragment21 : DaggerFragment() {
 
     private fun openPersonDetails(personItem: PersonItem) {
         //val action = actionSubFragment21ToPersonDetailFragment(personName = personItem.name)
-        findNavController().navigate(R.id.navigation_sub_fragment)
+        //findNavController().navigate(R.id.navigation_sub_fragment)
     }
 
     companion object {

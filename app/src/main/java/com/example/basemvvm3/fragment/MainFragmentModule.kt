@@ -3,19 +3,16 @@ package com.example.basemvvm3.fragment
 import androidx.lifecycle.ViewModel
 import com.example.basemvvm3.di.ViewModelKey
 import com.example.basemvvm3.di.scope.FragmentScoped
-import com.example.basemvvm3.fragment.dialog.DialogModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 import dagger.multibindings.IntoMap
 
 @Module
-internal abstract class MainFragmentModule  {
+internal abstract class MainFragmentModule {
 
     @FragmentScoped
-    @ContributesAndroidInjector(modules = [
-        DialogModule::class
-    ])
+    @ContributesAndroidInjector
     internal abstract fun contributeFragment(): MainFragment
 
     @Binds

@@ -7,14 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.basemvvm3.R
 import com.example.basemvvm3.activities.MainActivityViewModel
 import com.example.basemvvm3.fragment.dialog.GeneralBottomDialog
-import com.example.basemvvm3.fragment.dialog.GeneralCenterDialogWith2Buttons
 import com.example.basemvvm3.helper.MainNavigationFragment
 import com.example.basemvvm3.helper.viewModelProvider
 import kotlinx.android.synthetic.main.fragment_main.*
+import timber.log.Timber
 import javax.inject.Inject
 
 //share MainFragmentVM with Fragment2 scope activity
@@ -43,9 +45,14 @@ class MainFragment : MainNavigationFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
+            ?.observe(viewLifecycleOwner, Observer { result ->
+                // Do something with the result.
+                Timber.d(result)
+            })
+
         btn_dialog_center.setOnClickListener {
-            GeneralCenterDialogWith2Buttons.newInstance()
-                .show(this.childFragmentManager, CENTER_DIALOG)
+            findNavController().navigate(R.id.generalCenterDialogWith2Buttons)
         }
 
         btn_dialog_bottom.setOnClickListener {
@@ -85,10 +92,7 @@ class MainFragment : MainNavigationFragment() {
 
     private fun setNightMode(@AppCompatDelegate.NightMode nightMode: Int) {
         AppCompatDelegate.setDefaultNightMode(nightMode)
-
-        if (Build.VERSION.SDK_INT >= 11) {
-            requireActivity().recreate()
-        }
+        requireActivity().recreate()
     }
 
     //first time add: OnAttach -> OnCreate -> OnCreateView -> OnViewCreated -> OnActivityCreated
@@ -101,7 +105,6 @@ class MainFragment : MainNavigationFragment() {
     //destroy: onPause onStop onDestroyView onDestroy onDetach
 
     companion object {
-        private const val CENTER_DIALOG = "center_dialog"
         private const val BOTTOM_DIALOG = "bottom_dialog"
     }
 }

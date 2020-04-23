@@ -18,8 +18,8 @@
         app:navigationIcon="@drawable/ic_list"
         app:title="SubFragment" />
 
-    <TextView
-        android:id="@+id/text"
+    <Button
+        android:id="@+id/btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"

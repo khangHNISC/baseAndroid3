@@ -45,7 +45,8 @@
         android:label="GeneralCenterDialogWith2Buttons" >
         <action
             android:id="@+id/action_generalCenterDialogWith2Buttons_to_navigation_sub_fragment"
-            app:destination="@id/navigation_sub_fragment" />
+            app:destination="@id/navigation_sub_fragment"
+            app:popUpToInclusive="true" />
     </dialog>
     <fragment
         android:id="@+id/subFragment2"

@@ -5,6 +5,7 @@ import com.example.basemvvm3.activities.MainActivityModule
 import com.example.basemvvm3.di.scope.ActivityScoped
 import com.example.basemvvm3.fragment.MainFragment2Module
 import com.example.basemvvm3.fragment.MainFragmentModule
+import com.example.basemvvm3.fragment.dialog.DialogModule
 import com.example.basemvvm3.fragment.sub.DetailFragmentsModule
 import com.example.basemvvm3.fragment.sub.SubFragmentModule
 import dagger.Module
@@ -20,7 +21,8 @@ abstract class ActivityBindingModule {
             MainFragmentModule::class,
             MainFragment2Module::class,
             SubFragmentModule::class,
-            DetailFragmentsModule::class
+            DetailFragmentsModule::class,
+            DialogModule::class
         ]
     )
     internal abstract fun mainActivity(): MainActivity
