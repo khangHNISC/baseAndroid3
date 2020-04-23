@@ -30,6 +30,7 @@ class GeneralCenterDialogWith2Buttons : DaggerDialogFragment() {
         btnPositive.setOnClickListener {
             //better way to communicate with prevfragment
             findNavController().previousBackStackEntry?.savedStateHandle?.set("key", "abc")
+            findNavController().navigate(R.id.action_generalCenterDialogWith2Buttons_to_navigation_sub_fragment)
         }
 
         btnNegative.setOnClickListener {

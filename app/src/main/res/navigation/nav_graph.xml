@@ -22,14 +22,9 @@
         android:name="com.example.basemvvm3.fragment.MainFragment2"
         android:label="MainFragment2" >
         <action
-            android:id="@+id/action_navigation_main_fragment_2_to_subFragment22"
-            app:destination="@id/subFragment22" />
-        <action
-            android:id="@+id/action_navigation_main_fragment_2_to_subFragment21"
-            app:destination="@id/subFragment21" />
-        <action
-            android:id="@+id/action_navigation_main_fragment_2_to_subFragment2"
-            app:destination="@id/subFragment2" />
+            android:id="@+id/action_navigation_main_fragment_2_to_personDetailFragment2"
+            app:destination="@id/personDetailFragment"
+            app:popUpTo="@id/navigation_main_fragment_2" />
     </fragment>
     <fragment
         android:id="@+id/navigation_sub_fragment"
@@ -48,22 +43,6 @@
             app:destination="@id/navigation_sub_fragment"
             app:popUpToInclusive="true" />
     </dialog>
-    <fragment
-        android:id="@+id/subFragment2"
-        android:name="com.example.basemvvm3.fragment.sub.SubFragment2"
-        android:label="SubFragment2" />
-    <fragment
-        android:id="@+id/subFragment21"
-        android:name="com.example.basemvvm3.fragment.sub.SubFragment21"
-        android:label="SubFragment21" >
-        <action
-            android:id="@+id/action_subFragment21_to_personDetailFragment"
-            app:destination="@id/personDetailFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/subFragment22"
-        android:name="com.example.basemvvm3.fragment.sub.SubFragment22"
-        android:label="SubFragment22" />
     <fragment
         android:id="@+id/personDetailFragment"
         android:name="com.example.basemvvm3.fragment.sub.PersonDetailFragment"

@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.basemvvm3.R
+import com.example.basemvvm3.helper.MainNavigationFragment
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.sub_fragment.*
 
-class PersonDetailFragment: DaggerFragment(){
+class PersonDetailFragment: MainNavigationFragment(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +26,10 @@ class PersonDetailFragment: DaggerFragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        toolbar.setNavigationOnClickListener {
+            findNavController().navigate(R.id.navigation_main_fragment_2)
+        }
     }
 
     override fun onStart() {
