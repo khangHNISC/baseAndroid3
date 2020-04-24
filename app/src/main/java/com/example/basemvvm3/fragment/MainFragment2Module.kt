@@ -15,8 +15,8 @@ internal abstract class MainFragment2Module {
     @ContributesAndroidInjector
     internal abstract fun contributeFragment2(): MainFragment2
 
-    @Binds
+/*    @Binds
     @IntoMap
     @ViewModelKey(MainFragment2ViewModel::class)
-    internal abstract fun bindMain2ViewModel(viewModel: MainFragment2ViewModel): ViewModel
+    internal abstract fun bindMain2ViewModel(viewModel: MainFragment2ViewModel): ViewModel*/
 }

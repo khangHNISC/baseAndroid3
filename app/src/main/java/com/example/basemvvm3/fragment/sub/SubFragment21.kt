@@ -5,19 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.PersonItem
 import com.example.basemvvm3.classes.data.PersonList
 import com.example.basemvvm3.classes.data.PhotoItem
-import com.example.basemvvm3.fragment.MainFragment2ViewModel
+import com.example.basemvvm3.fragment.MainFragment2Directions
 import com.example.basemvvm3.fragment.adapter.*
+import com.example.basemvvm3.helper.EventObserver
 import com.example.basemvvm3.helper.viewModelProvider
 import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.sub_fragment_2.*
 import javax.inject.Inject
 import javax.inject.Named
-import kotlin.random.Random
 
 class SubFragment21 : DaggerFragment() {
 
@@ -31,11 +32,10 @@ class SubFragment21 : DaggerFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var vm: MainFragment2ViewModel
+    private lateinit var vm: SubFragment21ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm = requireActivity().viewModelProvider(viewModelFactory)
     }
 
     override fun onCreateView(
@@ -74,6 +74,10 @@ class SubFragment21 : DaggerFragment() {
         swipeRefreshLayout.isEnabled = false
 
         showItems(recyclerview, initList())
+
+        vm.navigateToPersonDetail.observe(viewLifecycleOwner, EventObserver { personItem ->
+            openPersonDetails(personItem)
+        })
     }
 
     /**
@@ -83,7 +87,7 @@ class SubFragment21 : DaggerFragment() {
         val l = mutableListOf<Any>()
         for ((i, _) in (0..30).withIndex()) {
             //val chance = Random.nextInt(0, 2)
-            val chance = i%2
+            val chance = i % 2
             if (chance == 0) {
                 val list = PersonList("$i", arrayListOf())
                 for (m in 0..13) {
@@ -119,6 +123,14 @@ class SubFragment21 : DaggerFragment() {
 
         loading.visibility = View.INVISIBLE
         recyclerview.visibility = View.VISIBLE
+    }
+
+    private fun openPersonDetails(personItem: PersonItem) {
+        //Timber.d(navController.currentDestination?.displayName) --- get the display name of current navController
+        val navController = findNavController()
+        val action =
+            MainFragment2Directions.actionNavigationMainFragment2ToPersonDetailFragment2(personName = personItem.name)
+        navController.navigate(action)
     }
 
     companion object {

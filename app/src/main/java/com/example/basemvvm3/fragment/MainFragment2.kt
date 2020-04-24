@@ -6,14 +6,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.example.basemvvm3.R
-import com.example.basemvvm3.classes.data.PersonItem
 import com.example.basemvvm3.fragment.sub.SubFragment2
 import com.example.basemvvm3.fragment.sub.SubFragment21
 import com.example.basemvvm3.fragment.sub.SubFragment22
-import com.example.basemvvm3.helper.EventObserver
 import com.example.basemvvm3.helper.MainNavigationFragment
 import com.example.basemvvm3.helper.viewModelProvider
 import com.google.android.material.snackbar.Snackbar
@@ -26,7 +27,7 @@ class MainFragment2 : MainNavigationFragment() {
 
     private lateinit var vm: MainFragment2ViewModel
 
-    /*private val vm2: MainFragment2ViewModel by viewModels {
+    private val vm2: MainFragment2ViewModel by viewModels {
         object : AbstractSavedStateViewModelFactory(this, null) {
             override fun <T : ViewModel?> create(
                 key: String,
@@ -37,7 +38,7 @@ class MainFragment2 : MainNavigationFragment() {
                 return MainFragment2ViewModel(handle) as T
             }
         }
-    }*/
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,13 +63,10 @@ class MainFragment2 : MainNavigationFragment() {
             Snackbar.make(view, "Here's a SnackBar", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
         }
-
-        vm.navigateToPersonDetail.observe(viewLifecycleOwner, EventObserver { personItem ->
-            openPersonDetails(personItem)
-        })
     }
 
     private fun setupViewPager() {
+        //childFragmentManager here to stop fragments to recreate when switching tabs
         viewpager.adapter = object : FragmentStatePagerAdapter(
             childFragmentManager,
             FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
@@ -109,14 +107,6 @@ class MainFragment2 : MainNavigationFragment() {
             { SubFragment21() },
             { SubFragment22() }
         )
-    }
-
-    private fun openPersonDetails(personItem: PersonItem) {
-        //Timber.d(navController.currentDestination?.displayName) --- get the display name of current navController
-        val navController = findNavController()
-        val action =
-            MainFragment2Directions.actionNavigationMainFragment2ToPersonDetailFragment2(personName = personItem.name)
-        navController.navigate(action)
     }
 }
 
