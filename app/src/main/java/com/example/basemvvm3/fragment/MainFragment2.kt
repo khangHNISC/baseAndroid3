@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
@@ -64,11 +65,12 @@ class MainFragment2 : MainNavigationFragment() {
         ) {
             override fun getCount() = FRAG_LIST.size
 
-            override fun getItem(position: Int) = FRAG_LIST[position]
+            override fun getItem(position: Int) = FRAG_LIST[position]()
 
             override fun getPageTitle(position: Int) = FRAG_TITLES[position]
         }
-        //viewpager.offscreenPageLimit = FRAG_LIST.size - 1 ---- require for FragmentState
+        //viewpager.offscreenPageLimit = FRAG_LIST.size - 1
+        //---- require for FragmentState
         tabs.setupWithViewPager(viewpager)
 
         //Meant for VP 2
@@ -91,10 +93,11 @@ class MainFragment2 : MainNavigationFragment() {
             "PAGE LIST"
         )
 
+        //weird shit but works if recreate this fragment
         private val FRAG_LIST = arrayOf(
-            SubFragment2(),
-            SubFragment21(),
-            SubFragment22()
+            { SubFragment2() },
+            { SubFragment21() },
+            { SubFragment22() }
         )
     }
 }
