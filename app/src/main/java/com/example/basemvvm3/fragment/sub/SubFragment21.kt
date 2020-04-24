@@ -36,6 +36,7 @@ class SubFragment21 : DaggerFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        vm = viewModelProvider(viewModelFactory)
     }
 
     override fun onCreateView(
@@ -127,10 +128,9 @@ class SubFragment21 : DaggerFragment() {
 
     private fun openPersonDetails(personItem: PersonItem) {
         //Timber.d(navController.currentDestination?.displayName) --- get the display name of current navController
-        val navController = findNavController()
         val action =
             MainFragment2Directions.actionNavigationMainFragment2ToPersonDetailFragment2(personName = personItem.name)
-        navController.navigate(action)
+        findNavController().navigate(action)
     }
 
     companion object {
