@@ -37,10 +37,6 @@ class MainFragment2 : MainNavigationFragment() {
         }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,17 +58,18 @@ class MainFragment2 : MainNavigationFragment() {
 
     private fun setupViewPager() {
         //childFragmentManager here to stop fragments to recreate when switching tabs
-        viewpager.adapter = object : FragmentStatePagerAdapter(
+        //FragmentStatePagerAdapter : better for manages ram (kill unused fragment child)
+        viewpager.adapter = object : FragmentPagerAdapter(
             childFragmentManager,
-            FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
+            BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
         ) {
             override fun getCount() = FRAG_LIST.size
 
-            override fun getItem(position: Int) = FRAG_LIST[position]()
+            override fun getItem(position: Int) = FRAG_LIST[position]
 
             override fun getPageTitle(position: Int) = FRAG_TITLES[position]
         }
-        viewpager.offscreenPageLimit = FRAG_LIST.size
+        //viewpager.offscreenPageLimit = FRAG_LIST.size - 1 ---- require for FragmentState
         tabs.setupWithViewPager(viewpager)
 
         //Meant for VP 2
@@ -80,7 +77,6 @@ class MainFragment2 : MainNavigationFragment() {
             override fun getItemCount(): Int = FRAG_LIST.size
 
             override fun createFragment(position: Int): Fragment = FRAG_LIST[position]()
-
         }
 
         TabLayoutMediator(tabs, viewpager) { tab, position ->
@@ -90,7 +86,6 @@ class MainFragment2 : MainNavigationFragment() {
     }
 
     companion object {
-
         private val FRAG_TITLES = arrayOf(
             "SIMPLE RV",
             "MULTI RV",
@@ -98,9 +93,9 @@ class MainFragment2 : MainNavigationFragment() {
         )
 
         private val FRAG_LIST = arrayOf(
-            { SubFragment2() },
-            { SubFragment21() },
-            { SubFragment22() }
+            SubFragment2(),
+            SubFragment21(),
+            SubFragment22()
         )
     }
 }
