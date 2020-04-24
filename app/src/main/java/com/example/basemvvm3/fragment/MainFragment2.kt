@@ -16,7 +16,6 @@ import com.example.basemvvm3.fragment.sub.SubFragment2
 import com.example.basemvvm3.fragment.sub.SubFragment21
 import com.example.basemvvm3.fragment.sub.SubFragment22
 import com.example.basemvvm3.helper.MainNavigationFragment
-import com.example.basemvvm3.helper.viewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main_2.*
 import javax.inject.Inject
@@ -24,8 +23,6 @@ import javax.inject.Inject
 class MainFragment2 : MainNavigationFragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private lateinit var vm: MainFragment2ViewModel
 
     private val vm2: MainFragment2ViewModel by viewModels {
         object : AbstractSavedStateViewModelFactory(this, null) {
@@ -42,8 +39,6 @@ class MainFragment2 : MainNavigationFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        vm = requireActivity().viewModelProvider(viewModelFactory)
-        retainInstance = true
     }
 
     override fun onCreateView(
