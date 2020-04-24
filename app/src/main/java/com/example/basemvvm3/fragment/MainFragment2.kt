@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentPagerAdapter
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.AbstractSavedStateViewModelFactory
 import androidx.lifecycle.SavedStateHandle
@@ -58,7 +57,7 @@ class MainFragment2 : MainNavigationFragment() {
 
     private fun setupViewPager() {
         //childFragmentManager here to stop fragments to recreate when switching tabs
-        //FragmentStatePagerAdapter : better for manages ram (kill unused fragment child)
+        //FragmentStatePagerAdapter : better for manages ram (kills unused fragment children)
         viewpager.adapter = object : FragmentPagerAdapter(
             childFragmentManager,
             BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT

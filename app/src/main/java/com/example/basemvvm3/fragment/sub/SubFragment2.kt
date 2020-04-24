@@ -55,19 +55,16 @@ class SubFragment2 : DaggerFragment() {
             vm.loadPhoto()
         }
 
-        vm.resultListPhoto2.observe(viewLifecycleOwner, Observer { result ->
-            when (result) {
-                is Result.Success -> {
-                    listPhoto = result.data
-                    showPhotoItem(recyclerview, getSubList(listPhoto, true))
-                }
-                is Result.Error -> {
+        vm.isLoading.observe(viewLifecycleOwner, Observer {
+            if(!it) {
+                loading.visibility = View.INVISIBLE
+                recyclerview.visibility = View.VISIBLE
+            }
+        })
 
-                }
-                is Result.Loading -> {
-                    loading.visibility = View.VISIBLE
-                }
-            }.checkAllMatched
+        vm.photoDataUI.observe(viewLifecycleOwner, Observer { result ->
+            listPhoto = result
+            showPhotoItem(recyclerview, getSubList(listPhoto, true))
         })
 
         vm.loadPhoto()
@@ -93,8 +90,6 @@ class SubFragment2 : DaggerFragment() {
 
         if (!isNotLoading) isNotLoading = true
         swipeRefreshLayout.isRefreshing = false
-        loading.visibility = View.INVISIBLE
-        recyclerview.visibility = View.VISIBLE
     }
 
     /**
