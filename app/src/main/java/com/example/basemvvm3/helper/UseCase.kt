@@ -9,8 +9,11 @@ import java.lang.Exception
 
 abstract class UseCase<in P, R> {
 
-    /**
-     * Async
+    /** Executes the use case asynchronously and places the [Result] in a MutableLiveData
+     *
+     * @param parameters the input parameters to run the use case with
+     * @param result the MutableLiveData where the result is posted to
+     *
      */
     operator fun invoke(parameters: P, result: MutableLiveData<Result<R>>) = runBlocking {
         result.postValue(Result.Loading)
