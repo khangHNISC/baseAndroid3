@@ -8,8 +8,9 @@ class SubFragment23ViewModel @Inject constructor(
     repo: PhotoRepository
 ) : ViewModel() {
 
-    private val repoResult = repo.photosByPage(10)
+    private val repoResult = repo.getPhotoPaging(10)
 
+    // LiveData<PageList> taken from Repo
     val photoDataUI = repoResult.pagedList
 
     //handle swipe refresh

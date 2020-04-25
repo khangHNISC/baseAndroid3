@@ -10,6 +10,7 @@ class PhotoDataSourceFactory(
 ) : DataSource.Factory<String, PhotoItem>() {
     val sourceLiveData = MutableLiveData<ItemKeyedPhotoDataSource>()
     override fun create(): DataSource<String, PhotoItem> {
+        //snap shot of data into PagedList
         val source = ItemKeyedPhotoDataSource(photoService)
         sourceLiveData.postValue(source)
         return source

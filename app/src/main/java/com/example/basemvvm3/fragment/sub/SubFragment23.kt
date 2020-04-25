@@ -17,7 +17,7 @@ import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.sub_fragment_2.*
 import javax.inject.Inject
 
-class SubFragment23: DaggerFragment(){
+class SubFragment23 : DaggerFragment() {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -47,11 +47,11 @@ class SubFragment23: DaggerFragment(){
         }
 
         vm.netWorkState.observe(viewLifecycleOwner, Observer {
-
+            adapter?.setNetworkState(it)
         })
 
         vm.refreshState.observe(viewLifecycleOwner, Observer {
-            swipeRefreshLayout.isRefreshing = it == Result.Loading
+            swipeRefreshLayout.isRefreshing = it is Result.Loading
         })
 
         vm.photoDataUI.observe(viewLifecycleOwner, Observer {
@@ -61,7 +61,7 @@ class SubFragment23: DaggerFragment(){
 
     private fun showPhotoItem(rv: RecyclerView, list: PagedList<PhotoItem>) {
         if (adapter == null) {
-            adapter = PhotoPagedListAdapter()
+            adapter = PhotoPagedListAdapter { vm.retry() }
 
             recyclerview.apply {
                 adapter = this@SubFragment23.adapter

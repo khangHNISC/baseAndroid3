@@ -14,7 +14,7 @@ import javax.inject.Inject
 interface PhotoRepository {
     suspend fun getPhoto(): Result<List<PhotoItem>>
 
-    fun photosByPage(pageSize: Int): Listing<PhotoItem>
+    fun getPhotoPaging(pageSize: Int): Listing<PhotoItem>
 }
 
 class PhotoRepositoryImplement @Inject constructor(private val photoService: PhotoService) :
@@ -59,7 +59,8 @@ class PhotoRepositoryImplement @Inject constructor(private val photoService: Pho
         }
     }*/
 
-    override fun photosByPage(pageSize: Int): Listing<PhotoItem> {
+    override fun getPhotoPaging(pageSize: Int): Listing<PhotoItem> {
+        //Data Source Factory from Data Layer
         val sourceFactory = PhotoDataSourceFactory(photoService)
 
         val livePagedList = sourceFactory.toLiveData(

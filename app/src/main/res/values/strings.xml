@@ -22,4 +22,5 @@
     <string name="add_cheese">add Cheese</string>
     <string name="insert_new_tag_hint">Insert new Tag</string>
     <string name="nav_header">Username</string>
+    <string name="retry_button">retry</string>
 </resources>

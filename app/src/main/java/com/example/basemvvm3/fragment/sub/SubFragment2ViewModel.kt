@@ -28,7 +28,7 @@ class SubFragment2ViewModel @Inject constructor(
         get() = _errorMessage
 
     init {
-        isLoading = _resultListPhoto2.map { it == Result.Loading }
+        isLoading = _resultListPhoto2.map { it is Result.Loading }
 
         _photoDataUI.addSource(_resultListPhoto2) {
             val data = (it as? Result.Success)?.data ?: return@addSource
