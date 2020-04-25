@@ -16,11 +16,6 @@ class SubFragment2ViewModel @Inject constructor(
 
     val isLoading: LiveData<Boolean>
 
-    val resultListPhoto: LiveData<Result<List<PhotoItem>>> = liveData {
-        emit(Result.Loading)
-        emit(repo.getPhoto())
-    }
-
     private val _resultListPhoto2 = MutableLiveData<Result<List<PhotoItem>>>()
 
     private val _photoDataUI = MediatorLiveData<List<PhotoItem>>()

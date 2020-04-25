@@ -20,6 +20,7 @@ interface PhotoRepository {
 class PhotoRepositoryImplement @Inject constructor(private val photoService: PhotoService) :
     PhotoRepository {
 
+    //service return deferred, suspend repo return data, vm creates coroutine
     override suspend fun getPhoto(): Result<List<PhotoItem>> {
         val response = photoService.getAllPhotoAsync().await()
         return if (response.isSuccessful) {
@@ -37,6 +38,27 @@ class PhotoRepositoryImplement @Inject constructor(private val photoService: Pho
         }
     }
 
+
+    //in VM assigned directly to LiveData -> best way.
+    // service return deferred, repo return live data , vm wire live data
+   /* override fun getPhoto(): LiveData<Result<List<PhotoItem>>> = liveData {
+        emit(Result.Loading)
+        val response = photoService.getAllPhotoAsync().await()
+        if (response.isSuccessful) {
+            emit(Result.Success(response.body()?.map {
+                PhotoItem(
+                    it.albumID ?: "",
+                    it.id ?: "",
+                    it.title ?: "",
+                    it.url ?: "",
+                    it.thumbnailUrl ?: ""
+                )
+            } ?: emptyList()))
+        } else {
+            emit(Result.Error(Exception("Server Error")))
+        }
+    }*/
+
     override fun photosByPage(pageSize: Int): Listing<PhotoItem> {
         val sourceFactory = PhotoDataSourceFactory(photoService)
 
@@ -44,7 +66,7 @@ class PhotoRepositoryImplement @Inject constructor(private val photoService: Pho
             config = Config(
                 pageSize = pageSize,
                 enablePlaceholders = false,
-                initialLoadSizeHint = pageSize * 2
+                initialLoadSizeHint = pageSize
             )
         )
 
