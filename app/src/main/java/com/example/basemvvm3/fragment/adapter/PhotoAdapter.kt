@@ -110,5 +110,4 @@ internal object PhotoItemDiff : DiffUtil.ItemCallback<Any>() {
             else -> true
         }
     }
-
 }

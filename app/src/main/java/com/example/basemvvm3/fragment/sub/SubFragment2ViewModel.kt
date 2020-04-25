@@ -26,7 +26,7 @@ class SubFragment2ViewModel @Inject constructor(
     private val _photoDataUI = MediatorLiveData<List<PhotoItem>>()
 
     val photoDataUI: LiveData<List<PhotoItem>>
-        get() = _photoDataUI
+        get() =  _photoDataUI
 
     private val _errorMessage = MediatorLiveData<Event<String>>()
     val errorMessage: LiveData<Event<String>>

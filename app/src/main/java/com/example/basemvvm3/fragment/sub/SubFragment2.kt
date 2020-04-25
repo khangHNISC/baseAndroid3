@@ -67,7 +67,11 @@ class SubFragment2 : DaggerFragment() {
             showPhotoItem(recyclerview, getSubList(listPhoto, true))
         })
 
-        vm.loadPhoto()
+        vm.errorMessage.observe(viewLifecycleOwner, Observer {
+
+        })
+
+        //vm.loadPhoto()
     }
 
     private fun showPhotoItem(rv: RecyclerView, list: List<Any>) {

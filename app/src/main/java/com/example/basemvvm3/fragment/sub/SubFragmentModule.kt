@@ -30,6 +30,10 @@ internal abstract class SubFragmentModule {
     @ContributesAndroidInjector
     internal abstract fun contributeSubFragment22(): SubFragment22
 
+    @FragmentScoped
+    @ContributesAndroidInjector
+    internal abstract fun contributeSubFragment23(): SubFragment23
+
     @Binds
     @IntoMap
     @ViewModelKey(SubFragment2ViewModel::class)
@@ -44,4 +48,9 @@ internal abstract class SubFragmentModule {
     @IntoMap
     @ViewModelKey(SubFragment22ViewModel::class)
     internal abstract fun bindMainViewModel22(viewModel: SubFragment22ViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SubFragment23ViewModel::class)
+    internal abstract fun bindMainViewModel23(viewModel: SubFragment23ViewModel): ViewModel
 }

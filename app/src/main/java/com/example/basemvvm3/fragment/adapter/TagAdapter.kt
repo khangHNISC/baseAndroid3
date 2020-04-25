@@ -10,11 +10,11 @@ import com.example.basemvvm3.R
 import com.example.basemvvm3.classes.data.db.TagEntity
 import kotlinx.android.synthetic.main.item_tag.view.*
 
-class TagAdapter() : PagedListAdapter<TagEntity, TagViewHolder>(TagDiffCallBack) {
+class TagAdapter : PagedListAdapter<TagEntity, TagViewHolder>(TagDiffCallBack) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TagViewHolder {
-        val viewHolder = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
-        return TagViewHolder(viewHolder)
+        val inflater = LayoutInflater.from(parent.context).inflate(viewType, parent, false)
+        return TagViewHolder(inflater)
     }
 
     override fun onBindViewHolder(holder: TagViewHolder, position: Int) {

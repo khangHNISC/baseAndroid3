@@ -15,6 +15,7 @@ import com.example.basemvvm3.R
 import com.example.basemvvm3.fragment.sub.SubFragment2
 import com.example.basemvvm3.fragment.sub.SubFragment21
 import com.example.basemvvm3.fragment.sub.SubFragment22
+import com.example.basemvvm3.fragment.sub.SubFragment23
 import com.example.basemvvm3.helper.MainNavigationFragment
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.fragment_main_2.*
@@ -90,14 +91,16 @@ class MainFragment2 : MainNavigationFragment() {
         private val FRAG_TITLES = arrayOf(
             "SIMPLE RV",
             "MULTI RV",
-            "PAGE LIST"
+            "PAGE_L 1",
+            "PAGE_L 2"
         )
 
         //weird shit but works if recreate this fragment
         private val FRAG_LIST = arrayOf(
             { SubFragment2() },
             { SubFragment21() },
-            { SubFragment22() }
+            { SubFragment22() },
+            { SubFragment23() }
         )
     }
 }
