@@ -20,31 +20,36 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var instance: AppDatabase? = null
+        //make sure INSTANCE upto date and same to all thread
+        //value will never be cache, write and read from main memory
+        private var INSTANCE: AppDatabase? = null
 
         private const val databaseName = "MVVM3-db"
 
         fun buildDatabase(context: Context): AppDatabase {
-            if (instance == null) {
-                // Since Room is only used for FTS, destructive migration is enough because the tables
-                // are cleared every time the app launches.
-                // https://medium.com/androiddevelopers/understanding-migrations-with-room-f01e04b07929
-                instance = Room.databaseBuilder(context, AppDatabase::class.java, databaseName)
-                    .fallbackToDestructiveMigration()
-                    .addCallback(object : RoomDatabase.Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            fillInDb()
-                        }
-                    })
-                    .build()
+            synchronized(this) {
+                var instance = INSTANCE
+                if (instance == null) {
+                    // Since Room is only used for FTS, destructive migration is enough because the tables
+                    // are cleared every time the app launches.
+                    instance = Room.databaseBuilder(context, AppDatabase::class.java, databaseName)
+                        .fallbackToDestructiveMigration()
+                        .addCallback(object : RoomDatabase.Callback() {
+                            override fun onCreate(db: SupportSQLiteDatabase) {
+                                fillInDb()
+                            }
+                        })
+                        .build()
+                    INSTANCE = instance
+                }
+                return instance
             }
-            return instance!!
         }
 
         private fun fillInDb() {
             CoroutineScope(Dispatchers.Main).launch {
                 withContext(Dispatchers.IO) {
-                    instance!!.tagDao().insert(TAG_DATA.map { TagEntity(id = 0, name = it) })
+                    INSTANCE!!.tagDao().insert(TAG_DATA.map { TagEntity(id = 0, name = it) })
                 }
             }
         }

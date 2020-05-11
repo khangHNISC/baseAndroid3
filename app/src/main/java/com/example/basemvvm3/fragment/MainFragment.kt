@@ -20,6 +20,7 @@ import javax.inject.Inject
 
 //share MainFragmentVM with Fragment2 scope activity
 class MainFragment : MainNavigationFragment() {
+    private val observer: Observer<Any> = Observer<Any> { result -> Timber.e(result.toString()) }
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
@@ -54,11 +55,8 @@ class MainFragment : MainNavigationFragment() {
 
         prepareToolBar(toolbar)
 
-/*        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
-            ?.observe(viewLifecycleOwner, Observer { result ->
-                // Do something with the result.
-                Timber.d(result)
-            })*/
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
+            ?.observe(viewLifecycleOwner, observer)
     }
 
     private fun prepareToolBar(toolbar: Toolbar) {
@@ -102,6 +100,12 @@ class MainFragment : MainNavigationFragment() {
     //detach: onPause, onStop, onDestroyView
     //reattach: onCreateView -> OnViewCreated -> OnActivityCreated -> OnStart -> OnResume
     //destroy: onPause onStop onDestroyView onDestroy onDetach
+
+    override fun onDetach() {
+        super.onDetach()
+        findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<String>("key")
+            ?.removeObserver(observer)
+    }
 
     companion object {
         private const val BOTTOM_DIALOG = "bottom_dialog"
